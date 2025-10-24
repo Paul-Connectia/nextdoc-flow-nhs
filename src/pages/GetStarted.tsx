@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const GetStarted = () => {
   const [consultDialogOpen, setConsultDialogOpen] = useState(false);
-  
+
   const steps = [
     {
       number: "01",
@@ -21,7 +21,7 @@ const GetStarted = () => {
       description: "Tell us about your background, qualifications, and career goals"
     },
     {
-      number: "02", 
+      number: "02",
       title: "Get Matched",
       description: "We'll match you with the right mentor and create your personalized plan"
     },
@@ -56,7 +56,7 @@ const GetStarted = () => {
               Start Your NHS Journey Today
             </h1>
             <p className="text-xl leading-relaxed opacity-90 mb-8">
-              Join thousands of international doctors who have successfully transitioned to the NHS 
+              Join thousands of international doctors who have successfully transitioned to the NHS
               with our comprehensive support system.
             </p>
           </div>
@@ -84,7 +84,7 @@ const GetStarted = () => {
                   <p className="text-muted-foreground text-sm">{step.description}</p>
                 </CardContent>
                 {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
+                  <div className="hidden md:block absolute top-1/2 -right-6 transform -translate-y-1/2">
                     <ArrowRight className="h-6 w-6 text-muted-foreground" />
                   </div>
                 )}
@@ -179,8 +179,8 @@ const GetStarted = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="background">Tell us about your medical background</Label>
-                  <Textarea 
-                    id="background" 
+                  <Textarea
+                    id="background"
                     placeholder="Please share your medical qualifications, specialties, and any relevant experience..."
                     rows={3}
                   />
@@ -202,7 +202,7 @@ const GetStarted = () => {
                   </div>
                   <div className="flex items-start space-x-2">
                     <Checkbox id="newsletter" />
-                     <Label htmlFor="newsletter" className="text-sm">
+                    <Label htmlFor="newsletter" className="text-sm">
                       I would like to receive updates about new programmes and NHS opportunities
                     </Label>
                   </div>
@@ -262,11 +262,11 @@ const GetStarted = () => {
 
               <Card>
                 <CardContent className="p-6">
-                   <h3 className="text-lg font-semibold mb-4">Still have questions?</h3>
+                  <h3 className="text-lg font-semibold mb-4">Still have questions?</h3>
                   <p className="text-muted-foreground mb-4">
                     Speak with one of our advisors to learn more about our programmes and how we can help you succeed.
                   </p>
-                  
+
                   <Dialog open={consultDialogOpen} onOpenChange={setConsultDialogOpen}>
                     <DialogTrigger asChild>
                       <Button variant="outline" className="w-full">
@@ -280,7 +280,7 @@ const GetStarted = () => {
                           Choose your preferred method to schedule a free consultation
                         </DialogDescription>
                       </DialogHeader>
-                      
+
                       <div className="space-y-4 py-4">
                         {/* Email Option */}
                         <a
