@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Brain, BookOpen, BarChart3, Share2, Users, Shield, Target, Focus, Clock, UserCheck, ExternalLink, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const PLAB = () => {
   const navigate = useNavigate();
@@ -41,11 +43,12 @@ const PLAB = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
       {/* 1️⃣ Hero Section */}
       <section className="relative bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--primary)/0.8)] text-primary-foreground py-16 overflow-hidden">
         {/* Doctor silhouette overlay */}
         <div className="absolute inset-0 opacity-[0.08] pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAwIDQwYzE2LjU3IDAgMzAgMTMuNDMgMzAgMzBzLTEzLjQzIDMwLTMwIDMwLTMwLTEzLjQzLTMwLTMwIDEzLjQzLTMwIDMwLTMwem0wIDcwYzE2LjU3IDAgMzAgMTMuNDMgMzAgMzBzLTEzLjQzIDMwLTMwIDMwLTMwLTEzLjQzLTMwLTMwIDEzLjQzLTMwIDMwLTMwem0wIDBsLTIwIDQwaDQwbC0yMC00MHoiIGZpbGw9IndoaXRlIi8+PC9zdmc+')]"></div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -62,17 +65,17 @@ const PLAB = () => {
               Built by Doctors. For Doctors. AI-Powered.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                variant="secondary" 
+              <Button
+                size="lg"
+                variant="secondary"
                 className="px-8 shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                 onClick={() => navigate('/login?next=/dashboard/plab-qbank')}
               >
                 Login to Access PLAB QBank
               </Button>
-              <Button 
-                size="lg" 
-                variant="secondary" 
+              <Button
+                size="lg"
+                variant="secondary"
                 className="px-8 shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                 onClick={() => navigate('/login?next=/dashboard/resources/plab2')}
               >
@@ -82,7 +85,7 @@ const PLAB = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Animated icons */}
         <div className="absolute top-10 right-10 opacity-10 animate-pulse">
           <Brain className="h-24 w-24" />
@@ -107,8 +110,8 @@ const PLAB = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             {features.map((feature, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="group flex items-start space-x-4 p-4 rounded-lg hover:bg-accent/50 transition-colors animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
@@ -149,7 +152,7 @@ const PLAB = () => {
           </div>
 
           <div className="text-center">
-            <Button 
+            <Button
               size="lg"
               className="shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
               onClick={() => navigate('/login?next=/dashboard/plab-qbank')}
@@ -189,7 +192,7 @@ const PLAB = () => {
           </Card>
 
           <div className="text-center mt-8">
-            <Button 
+            <Button
               size="lg"
               className="shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
               onClick={() => navigate('/login?next=/dashboard/plab-qbank')}
@@ -227,7 +230,7 @@ const PLAB = () => {
           </Card>
 
           <div className="text-center mt-8">
-            <Button 
+            <Button
               size="lg"
               className="shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
               onClick={() => navigate('/login?next=/dashboard/resources/plab2')}
@@ -254,7 +257,7 @@ const PLAB = () => {
                 For a limited period, the first 1000 users will enjoy full PLAB-1 access for free.
                 Mentor analysis and feedback features remain part of the paid plans.
               </p>
-              <Button 
+              <Button
                 size="lg"
                 className="shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                 onClick={() => navigate('/login?next=/dashboard/plab-qbank')}
@@ -274,11 +277,11 @@ const PLAB = () => {
               PLAB is a GMC examination. NextDoc UK is an independent educational platform offering AI-powered learning tools for IMGs.
               We make no pass-rate or placement claims. Mentor analysis is a paid feature.
             </p>
-            
+
             <div className="flex items-center justify-center gap-6">
-              <a 
-                href="https://instagram.com/nextdocglobal" 
-                target="_blank" 
+              <a
+                href="https://instagram.com/nextdocglobal"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Instagram – Daily 5-Question Quiz"
@@ -286,9 +289,9 @@ const PLAB = () => {
                 <span aria-hidden="true">📸</span>
                 <span className="text-sm">Instagram – Daily 5-Question Quiz</span>
               </a>
-              <a 
-                href="https://t.me/nextdocglobal" 
-                target="_blank" 
+              <a
+                href="https://t.me/nextdocglobal"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Telegram – Peer Learning Group"
@@ -300,6 +303,7 @@ const PLAB = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

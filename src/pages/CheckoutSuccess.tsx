@@ -14,7 +14,7 @@ const CheckoutSuccess = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [orderDetails, setOrderDetails] = useState(null);
 
   useEffect(() => {
     // Trigger confetti
@@ -26,7 +26,7 @@ const CheckoutSuccess = () => {
 
     const verifyPayment = async () => {
       const sessionId = searchParams.get('session_id');
-      
+
       if (!sessionId) {
         toast({
           title: "Error",
@@ -87,7 +87,7 @@ const CheckoutSuccess = () => {
                 {orderDetails && (
                   <div className="bg-accent/20 rounded-lg p-6 space-y-3">
                     <h3 className="font-semibold text-lg">Order Summary</h3>
-                    {orderDetails.items?.map((item: any, index: number) => (
+                    {orderDetails.items?.map((item, index: number) => (
                       <div key={index} className="flex justify-between">
                         <span>{item.name}</span>
                         <span className="font-medium">£{item.price}</span>
@@ -106,7 +106,7 @@ const CheckoutSuccess = () => {
                   <p className="text-muted-foreground">
                     A confirmation email has been sent to your inbox with all the details.
                   </p>
-                  
+
                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
                     <Button onClick={() => navigate('/dashboard')} size="lg">
                       Go to Dashboard

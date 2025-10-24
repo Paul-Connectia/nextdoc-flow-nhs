@@ -8,6 +8,8 @@ import { FileText, Download, ExternalLink, Calendar, Lock, Bell } from "lucide-r
 import { LabsWaitlistForm } from "@/components/LabsWaitlistForm";
 import { SEOHead } from "@/components/SEOHead";
 import { analytics } from "@/lib/analytics";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const Research = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -25,7 +27,7 @@ const Research = () => {
     {
       title: "AI-Enhanced Medical Education: Transforming PLAB Preparation",
       authors: "Dr. Emily Chen, Dr. Alexander Wright",
-      date: "January 2024", 
+      date: "January 2024",
       category: "Medical Education",
       summary: "Research on the effectiveness of AI-powered learning platforms in improving PLAB examination success rates.",
       downloadCount: "1,923",
@@ -82,6 +84,7 @@ const Research = () => {
         canonicalUrl="https://nextdocuk.com/labs"
       />
 
+      <Navigation />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -90,7 +93,7 @@ const Research = () => {
               NextDoc Labs
             </h1>
             <p className="text-xl leading-relaxed opacity-90 mb-3">
-              Evidence-led white papers and practical frameworks on NHS workforce, 
+              Evidence-led white papers and practical frameworks on NHS workforce,
               medical education, and health & social care.
             </p>
             <p className="text-sm opacity-75 italic">
@@ -109,9 +112,9 @@ const Research = () => {
             </CardHeader>
             <CardContent className="space-y-4 text-muted-foreground">
               <p>
-                NextDoc Labs publishes white papers, working papers, and methods notes focused on 
-                NHS workforce integration, IMG pathways, medical education, and responsible AI. 
-                We follow COPE/ICMJE guidance and EQUATOR reporting standards, aiming for BMJ-level 
+                NextDoc Labs publishes white papers, working papers, and methods notes focused on
+                NHS workforce integration, IMG pathways, medical education, and responsible AI.
+                We follow COPE/ICMJE guidance and EQUATOR reporting standards, aiming for BMJ-level
                 rigor with service-design practicality.
               </p>
               <p className="font-medium text-foreground">
@@ -173,7 +176,7 @@ const Research = () => {
       <section className="py-16 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Research Publications</h2>
-          
+
           <div className="space-y-6">
             {whitepapers.map((paper, index) => (
               <Card key={index}>
@@ -247,7 +250,7 @@ const Research = () => {
       <section className="py-8 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-muted-foreground">
-            Our work aligns with NHS guidance, NICE, BNF, ICMJE, COPE, and EQUATOR 
+            Our work aligns with NHS guidance, NICE, BNF, ICMJE, COPE, and EQUATOR
             (CONSORT, STROBE, PRISMA, SQUIRE).
           </p>
         </div>
@@ -268,8 +271,8 @@ const Research = () => {
                 <p className="text-muted-foreground text-sm">
                   2-page overview: what we accept, reporting standards, licensing, conflicts.
                 </p>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full"
                   disabled
                   onClick={() => analytics.track("pdf_download", { document: "author_guidelines" })}
@@ -291,8 +294,8 @@ const Research = () => {
                 <p className="text-muted-foreground text-sm">
                   COPE/ICMJE alignment, plagiarism screening, data availability.
                 </p>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full"
                   disabled
                   onClick={() => analytics.track("pdf_download", { document: "editorial_ethics" })}
@@ -316,9 +319,9 @@ const Research = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button 
-                  size="lg" 
-                  variant="secondary" 
+                <Button
+                  size="lg"
+                  variant="secondary"
                   className="px-8"
                   disabled
                   aria-disabled="true"
@@ -335,9 +338,9 @@ const Research = () => {
 
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button 
-                  size="lg" 
-                  variant="secondary" 
+                <Button
+                  size="lg"
+                  variant="secondary"
                   className="px-8"
                   disabled
                   aria-disabled="true"
@@ -366,6 +369,7 @@ const Research = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

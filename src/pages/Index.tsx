@@ -22,15 +22,15 @@ import React, { useState } from "react";
 
 const Index = () => {
   const [showOnboardingForm, setShowOnboardingForm] = useState(false);
-  
+
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead 
+      <SEOHead
         title="NextDoc - NHS Career Success Platform for International Doctors"
         description="AI-powered tools for NHS career success. PLAB preparation, CV optimisation, interview simulation, and career guidance for medical professionals transitioning to the UK healthcare system."
         keywords="NHS careers, PLAB preparation, medical CV, NHS jobs, international doctors, UK medical training, NHS interview preparation, medical career guidance, NextDoc"
         structuredData={{
-        "@context": "https://schema.org",
+          "@context": "https://schema.org",
           "@type": "WebSite",
           "name": "NextDoc UK",
           "url": "https://nextdocuk.com",
@@ -42,7 +42,7 @@ const Index = () => {
         }}
       />
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-8 sm:py-12 md:py-16 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -63,10 +63,10 @@ const Index = () => {
               <p className="text-base sm:text-lg md:text-xl leading-relaxed opacity-90 mb-6 sm:mb-8">
                 AI-powered tools, mentor-validated guidance, and structured learning pathways for doctors preparing for NHS careers.
               </p>
-              
+
               {/* AI Search Console */}
               <AISearchConsole />
-              
+
               <div className="flex flex-col gap-3 sm:gap-4 mb-6 sm:mb-8 max-w-md mx-auto sm:mx-0">
                 <Link to="/get-started" className="w-full">
                   <Button size="lg" variant="secondary" className="w-full">
@@ -105,7 +105,7 @@ const Index = () => {
                   <span>Proven Results</span>
                 </div>
               </div>
-              
+
               {/* FREE PLAB Quiz Bank Promotional Box */}
               <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-accent/20 backdrop-blur-sm rounded-lg border-2 border-primary shadow-lg">
                 <div className="flex items-start justify-between mb-3 sm:mb-4 gap-3">
@@ -141,7 +141,7 @@ const Index = () => {
                   </Button>
                 </Link>
               </div>
-              
+
               {/* Instagram Community Footer - Enhanced */}
               <a
                 href="https://instagram.com/nextdoc_uk"
@@ -163,7 +163,7 @@ const Index = () => {
                   </div>
                 </div>
               </a>
-              
+
             </div>
 
             {/* Right Column - Rotating Mentor Display */}
@@ -190,8 +190,8 @@ const Index = () => {
             {/* GapMap (Flagship) */}
             <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary overflow-hidden">
               <div className="aspect-video overflow-hidden">
-                <img 
-                  src={gapmapHero} 
+                <img
+                  src={gapmapHero}
                   alt="GapMap NHS career pathway visualization"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -219,7 +219,7 @@ const Index = () => {
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'gapmap-flagship',
                       name: 'GapMap™',
@@ -240,8 +240,8 @@ const Index = () => {
             {/* CVPro */}
             <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary overflow-hidden">
               <div className="aspect-video overflow-hidden">
-                <img 
-                  src={cvBoosterHero} 
+                <img
+                  src={cvBoosterHero}
                   alt="CVPro AI-powered NHS CV rewrite"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -265,7 +265,7 @@ const Index = () => {
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'cvbooster-basic',
                       name: 'CVBooster™',
@@ -286,8 +286,8 @@ const Index = () => {
             {/* SponsorMatch */}
             <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary overflow-hidden">
               <div className="aspect-video overflow-hidden">
-                <img 
-                  src={sponsormatchHero} 
+                <img
+                  src={sponsormatchHero}
                   alt="SponsorMatch NHS trust matching"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -315,7 +315,7 @@ const Index = () => {
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'sponsormatch-flagship',
                       name: 'SponsorMatch™',
@@ -336,8 +336,8 @@ const Index = () => {
             {/* InterviewSim+ */}
             <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary overflow-hidden">
               <div className="aspect-video overflow-hidden">
-                <img 
-                  src={interviewsimHero} 
+                <img
+                  src={interviewsimHero}
                   alt="InterviewSim+ AI interview practice"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -365,7 +365,7 @@ const Index = () => {
                       <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'interviewsim-basic',
                       name: 'InterviewSim+™',
@@ -404,7 +404,7 @@ const Index = () => {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
               Book a consultation with our NHS experts. We're here to guide you every step of the way.
             </p>
-            
+
             <Dialog>
               <DialogTrigger asChild>
                 <Button size="lg" className="px-8 py-3 text-lg">
@@ -423,9 +423,9 @@ const Index = () => {
                       <Globe className="h-6 w-6 text-primary" />
                     </div>
                     <h3 className="font-semibold mb-2">Email Us</h3>
-                <a href="mailto:support@nextdocuk.com" className="text-primary hover:underline font-medium">
-                  support@nextdocuk.com
-                </a>
+                    <a href="mailto:support@nextdocuk.com" className="text-primary hover:underline font-medium">
+                      support@nextdocuk.com
+                    </a>
                   </div>
 
                   {/* UK Contact */}
@@ -477,7 +477,7 @@ const Index = () => {
             </Badge>
             <h2 className="text-3xl font-bold mb-4">Map Your NHS Journey—For Every Pathway</h2>
             <p className="text-muted-foreground max-w-3xl mx-auto">
-              Visualise milestones, flag gaps, and integrate CPD/mentor tools at every step. 
+              Visualise milestones, flag gaps, and integrate CPD/mentor tools at every step.
               Choose your pathway and get a personalised roadmap to NHS success.
             </p>
           </div>
@@ -754,7 +754,7 @@ const Index = () => {
               </Card>
             </Link>
           </div>
-          
+
           <div className="text-center mt-6 text-xs text-muted-foreground border-t border-border pt-4">
             <p>NextDoc UK provides independent learning resources and career guidance. We are not affiliated with the GMC or NHS.</p>
           </div>
@@ -801,7 +801,7 @@ const Index = () => {
                 </p>
                 <div className="space-y-2">
                   <Link to="/products">
-                    <Button variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground w-full">
+                    <Button variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground w-fit ">
                       Explore Tools
                     </Button>
                   </Link>
@@ -811,13 +811,13 @@ const Index = () => {
                     rel="noopener noreferrer"
                     className="block"
                   >
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       size="sm"
-                      className="w-full border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                      className="w-fit text-wrap py-6 border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
                     >
                       <Youtube className="h-4 w-4 mr-2" />
-                      Podcast by Dr. Pradeep Sabapathy — Coming Soon
+                      Podcast by Dr. Pradeep Sabapathy <br /> — Coming Soon
                     </Button>
                   </a>
                 </div>
@@ -839,7 +839,7 @@ const Index = () => {
                       Find Mentors
                     </Button>
                   </Link>
-                  
+
                   {/* Community & Support */}
                   <div className="pt-2 border-t border-border">
                     <p className="text-xs text-muted-foreground mb-2">Community & Support</p>
@@ -850,8 +850,8 @@ const Index = () => {
                         rel="noopener noreferrer"
                         className="block"
                       >
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                         >
@@ -913,15 +913,15 @@ const Index = () => {
               Learn from real journeys of doctors who successfully transitioned to the NHS.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             {/* Dr. Arjun Patel Journey */}
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="relative mx-auto mb-3">
                   <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-amber-400/30 mx-auto">
-                    <img 
-                      src="/lovable-uploads/a1974f11-8f3f-40c0-b5d8-6e22f135a5e8.png" 
+                    <img
+                      src="/lovable-uploads/a1974f11-8f3f-40c0-b5d8-6e22f135a5e8.png"
                       alt="Dr. Arjun Patel"
                       className="w-full h-full object-cover"
                     />
@@ -950,8 +950,8 @@ const Index = () => {
               <CardHeader className="text-center pb-2">
                 <div className="relative mx-auto mb-3">
                   <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-teal-400/30 mx-auto">
-                    <img 
-                      src="/lovable-uploads/0c62a90c-c3bd-4245-979a-ebe1a0e8cf1e.png" 
+                    <img
+                      src="/lovable-uploads/0c62a90c-c3bd-4245-979a-ebe1a0e8cf1e.png"
                       alt="Dr. Priya Sharma"
                       className="w-full h-full object-cover"
                     />
@@ -980,8 +980,8 @@ const Index = () => {
               <CardHeader className="text-center pb-2">
                 <div className="relative mx-auto mb-3">
                   <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-blue-400/30 mx-auto">
-                    <img 
-                      src="/lovable-uploads/0fa2af72-01b3-48c7-9ab5-ac928ccd9f2e.png" 
+                    <img
+                      src="/lovable-uploads/0fa2af72-01b3-48c7-9ab5-ac928ccd9f2e.png"
                       alt="Dr. Amit Kumar"
                       className="w-full h-full object-cover"
                     />
@@ -1020,7 +1020,7 @@ const Index = () => {
               Our methodology is built on NHS workforce data and proven educational frameworks
             </p>
           </div>
-          
+
           <div className="text-center max-w-3xl mx-auto">
             <p className="text-base text-primary-foreground/90 mb-4">
               Our approach is grounded in NHS workforce experience, evidence-based learning design, and continuous mentor feedback.
@@ -1044,7 +1044,7 @@ const Index = () => {
 
       {/* Social Proof Section */}
       <SocialProof />
-      
+
       {/* Mentor CTAs */}
       <div className="flex flex-col gap-3">
         <Link to="/mentors" className="w-full">
@@ -1053,8 +1053,8 @@ const Index = () => {
             <Users className="h-4 w-4 ml-2" />
           </Button>
         </Link>
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           className="w-full border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground"
           onClick={() => setShowOnboardingForm(true)}
         >
@@ -1062,12 +1062,12 @@ const Index = () => {
           <GraduationCap className="h-4 w-4 ml-2" />
         </Button>
       </div>
-      
+
       {/* Mentor Onboarding Form Modal */}
       {showOnboardingForm && (
         <MentorOnboardingForm onClose={() => setShowOnboardingForm(false)} />
       )}
-      
+
       <ConditionalFooter />
     </div>
   );

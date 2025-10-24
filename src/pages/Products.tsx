@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { BuyNowButton } from "@/components/BuyNowButton";
 import { SEOHead } from "@/components/SEOHead";
 import { PRICES } from "@/config/pricing";
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 const Products = () => {
   const [billingInterval, setBillingInterval] = useState<'month' | 'year'>('month');
@@ -14,12 +16,13 @@ const Products = () => {
 
   return (
     <div>
-        <SEOHead
-          title="AI NHS Career Tools & Mentorship | NextDoc"
-          description="Explore AI-powered NHS career tools: GapMap, CVBooster, SponsorMatch, InterviewSim+, PLAB QBank, and mentor support."
-          keywords="AI NHS tools, PLAB QBank, NHS mentorship, CV review, Interview simulator"
-        />
-        {/* Hero Section */}
+      <SEOHead
+        title="AI NHS Career Tools & Mentorship | NextDoc"
+        description="Explore AI-powered NHS career tools: GapMap, CVBooster, SponsorMatch, InterviewSim+, PLAB QBank, and mentor support."
+        keywords="AI NHS tools, PLAB QBank, NHS mentorship, CV review, Interview simulator"
+      />
+      <Navigation />
+      {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
@@ -81,7 +84,7 @@ const Products = () => {
             <Button onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'Hello NextDoc AI — can you help me plan my NHS journey?', specialty: 'general' } }))} className="w-full sm:w-auto">
               Try Free (5/day) <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
-            <BuyNowButton 
+            <BuyNowButton
               item={{
                 id: 'pro-ai',
                 name: 'NextDoc Pro AI Subscription',
@@ -149,7 +152,7 @@ const Products = () => {
                       Map My NHS Journey <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'gapmap',
                       name: 'GapMap™',
@@ -162,7 +165,7 @@ const Products = () => {
                   >
                     Buy Now - £{PRICES.gapMap.ai}
                   </BuyNowButton>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'gapmap-mentor',
                       name: 'GapMap™ + Mentor',
@@ -175,9 +178,9 @@ const Products = () => {
                   >
                     AI + Mentor — £{PRICES.gapMap.aiMentor}
                   </BuyNowButton>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="w-full focus-visible:ring-2 focus-visible:ring-ring"
                     onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'Is GapMap™ right for my NHS pathway? Explain how it works and the outcomes.', specialty: 'general' } }))}
                   >
@@ -227,7 +230,7 @@ const Products = () => {
                       Launch CVBooster™ <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'cvbooster',
                       name: 'CVBooster™',
@@ -240,7 +243,7 @@ const Products = () => {
                   >
                     AI Review - £{PRICES.cvPro.ai}
                   </BuyNowButton>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'cvbooster-mentor',
                       name: 'CVBooster™ AI + Mentor',
@@ -253,9 +256,9 @@ const Products = () => {
                   >
                     AI + Mentor — £{PRICES.cvPro.aiMentor}
                   </BuyNowButton>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="w-full focus-visible:ring-2 focus-visible:ring-ring"
                     onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'Can AI review and mentor polish improve my NHS CV with CVBooster™? What do I get?', specialty: 'general' } }))}
                   >
@@ -305,7 +308,7 @@ const Products = () => {
                       Learn More <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'sponsormatch',
                       name: 'SponsorMatch™',
@@ -318,9 +321,9 @@ const Products = () => {
                   >
                     Buy Report - £29
                   </BuyNowButton>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="w-full focus-visible:ring-2 focus-visible:ring-ring"
                     onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'How does SponsorMatch™ find NHS trusts with visa sponsorship and fit for me?', specialty: 'general' } }))}
                   >
@@ -370,7 +373,7 @@ const Products = () => {
                       Learn More <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'interviewsim',
                       name: 'InterviewSim+™',
@@ -383,7 +386,7 @@ const Products = () => {
                   >
                     Buy Session - £{PRICES.interviewSim.ai}
                   </BuyNowButton>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'interviewsim-mentor',
                       name: 'InterviewSim+™ AI + Mentor Review',
@@ -396,9 +399,9 @@ const Products = () => {
                   >
                     AI + Mentor Review — £{PRICES.interviewSim.aiMentor}
                   </BuyNowButton>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="w-full"
                     onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'What does InterviewSim+™ include and how is feedback provided?', specialty: 'general' } }))}
                   >
@@ -448,7 +451,7 @@ const Products = () => {
                       Book Mentor <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'mentor-session',
                       name: 'Mentor Session',
@@ -461,7 +464,7 @@ const Products = () => {
                   >
                     Buy Session - £{PRICES.mentorConnect.single}
                   </BuyNowButton>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'mentor-3-pack',
                       name: 'Mentor 3-Pack',
@@ -474,9 +477,9 @@ const Products = () => {
                   >
                     3-Pack — £{PRICES.mentorConnect.pack3}
                   </BuyNowButton>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="w-full"
                     onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'Which mentor should I book for my NHS pathway via MentorConnect™?', specialty: 'general' } }))}
                   >
@@ -522,7 +525,7 @@ const Products = () => {
                       Try Free PLAB Quiz <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton 
+                  <BuyNowButton
                     item={{
                       id: 'plab-qbank-full',
                       name: 'PLAB Mastery QBank - Full Access',
@@ -535,9 +538,9 @@ const Products = () => {
                   >
                     Buy Full Access - £69
                   </BuyNowButton>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="w-full"
                     onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'Is PLAB Mastery QBank right for me? What’s included and how do I start?', specialty: 'general' } }))}
                   >
@@ -563,7 +566,7 @@ const Products = () => {
           {/* English Proficiency */}
           <div className="mb-12">
             <h3 className="text-2xl font-bold mb-6">A. English Proficiency</h3>
-            <Card 
+            <Card
               className="group hover:shadow-xl transition-all cursor-pointer"
               onClick={() => navigate('/english')}
             >
@@ -601,7 +604,7 @@ const Products = () => {
                       <span className="text-sm">Reading Assistant — Comprehension Coach</span>
                     </div>
                   </div>
-                  <Button 
+                  <Button
                     className="w-full shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -619,7 +622,7 @@ const Products = () => {
           <div className="mb-12">
             <h3 className="text-2xl font-bold mb-6">B. PLAB Exam Suite</h3>
             <div className="grid md:grid-cols-2 gap-8">
-              <Card 
+              <Card
                 className="group hover:shadow-xl transition-all cursor-pointer"
                 onClick={() => navigate('/exams/plab')}
               >
@@ -654,7 +657,7 @@ const Products = () => {
                     <p className="text-xs text-muted-foreground italic">
                       Mentor analysis is a paid add-on
                     </p>
-                    <Button 
+                    <Button
                       className="w-full shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -699,7 +702,7 @@ const Products = () => {
                   </div>
                   <div className="space-y-2">
                     <Button className="w-full">Get Bundle</Button>
-                    <BuyNowButton 
+                    <BuyNowButton
                       item={{
                         id: 'plab-bundle',
                         name: 'PLAB Study Material & Starter Bundle',
@@ -728,8 +731,8 @@ const Products = () => {
                 { title: "MRCOG", subtitle: "Prep", color: "purple", link: "/exams/mrcog" },
                 { title: "MRCPCH", subtitle: "Prep", color: "blue", link: "/exams/mrcpch" }
               ].map((exam, index) => (
-                <Card 
-                  key={index} 
+                <Card
+                  key={index}
                   className="group hover:shadow-xl transition-all cursor-pointer"
                   onClick={() => navigate(exam.link)}
                 >
@@ -748,8 +751,8 @@ const Products = () => {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       className="w-full shadow-sm transition-all hover:bg-primary/90 hover:shadow-md"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -805,7 +808,7 @@ const Products = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <BuyNowButton 
+                    <BuyNowButton
                       item={{
                         id: 'cpd-lite',
                         name: 'CPD SmartCert™ Lite',
@@ -817,7 +820,7 @@ const Products = () => {
                     >
                       Buy CPD Lite — £{PRICES.cpdSmartCert.lite}
                     </BuyNowButton>
-                    <BuyNowButton 
+                    <BuyNowButton
                       item={{
                         id: 'cpd-plus',
                         name: 'CPD SmartCert™ Plus',
@@ -891,13 +894,13 @@ const Products = () => {
           <div className="mb-6 flex items-center justify-center gap-2">
             <span className="text-sm text-muted-foreground">Billing:</span>
             <div className="inline-flex rounded-md border">
-              <button 
+              <button
                 className={`px-3 py-1 text-sm rounded-l-md ${billingInterval === 'month' ? 'bg-primary text-primary-foreground' : 'bg-background'}`}
                 onClick={() => setBillingInterval('month')}
               >
                 Monthly
               </button>
-              <button 
+              <button
                 className={`px-3 py-1 text-sm rounded-r-md ${billingInterval === 'year' ? 'bg-primary text-primary-foreground' : 'bg-background'}`}
                 onClick={() => setBillingInterval('year')}
               >
@@ -923,7 +926,7 @@ const Products = () => {
                   <div className="flex items-center space-x-2"><CheckCircle className="h-4 w-4 text-primary" /><span>Faster responses, deeper explanations</span></div>
                   <div className="flex items-center space-x-2"><CheckCircle className="h-4 w-4 text-primary" /><span>“Ask Mentor AI” initiation</span></div>
                 </div>
-                <BuyNowButton 
+                <BuyNowButton
                   item={{ id: 'pro-ai', name: 'NextDoc Pro AI Subscription', price: PRICES.proAI.monthly, description: 'Unlimited AI access', type: 'subscription' }}
                   className="w-full"
                 >
@@ -950,7 +953,7 @@ const Products = () => {
                   <div className="flex items-center space-x-2"><CheckCircle className="h-4 w-4 text-primary" /><span>Full CVBooster™</span></div>
                   <div className="flex items-center space-x-2"><CheckCircle className="h-4 w-4 text-primary" /><span>Basic CPD, GapMap Lite</span></div>
                 </div>
-                <BuyNowButton 
+                <BuyNowButton
                   item={{ id: `core-${billingInterval}`, name: 'NextDoc Core Subscription', price: billingInterval === 'year' ? PRICES.core.yearly : PRICES.core.monthly, description: 'Core subscription', type: 'subscription' }}
                   className="w-full"
                 >
@@ -979,7 +982,7 @@ const Products = () => {
                   <div className="flex items-center space-x-2"><CheckCircle className="h-4 w-4 text-primary" /><span>CPD Plus, InterviewSim+</span></div>
                   <div className="flex items-center space-x-2"><CheckCircle className="h-4 w-4 text-primary" /><span>Priority features, portfolio review</span></div>
                 </div>
-                <BuyNowButton 
+                <BuyNowButton
                   item={{ id: `elite-${billingInterval}`, name: 'NextDoc Elite Subscription', price: billingInterval === 'year' ? PRICES.elite.yearly : PRICES.elite.monthly, description: 'Elite subscription', type: 'subscription' }}
                   className="w-full"
                 >
@@ -1000,7 +1003,7 @@ const Products = () => {
                 badgeColor: "bg-green-100 text-green-800"
               },
               {
-                title: "Postgraduate Exam Success Bundle", 
+                title: "Postgraduate Exam Success Bundle",
                 description: "QBank + study material + mentor session + live workshop + CPD",
                 price: "£349",
                 badge: "Complete",
@@ -1034,7 +1037,7 @@ const Products = () => {
                     <Button className="w-full" size="sm">
                       Get Bundle
                     </Button>
-                    <BuyNowButton 
+                    <BuyNowButton
                       item={{
                         id: bundle.title.toLowerCase().replace(/\s+/g, '-'),
                         name: bundle.title,
@@ -1137,6 +1140,7 @@ const Products = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

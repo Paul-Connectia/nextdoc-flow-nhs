@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { 
-  User, LogOut, BookOpen, Brain, FileText, MapPin, Award, 
+import {
+  User, LogOut, BookOpen, Brain, FileText, MapPin, Award,
   Clock, TrendingUp, CheckCircle2, AlertCircle
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
@@ -78,7 +78,7 @@ const Dashboard = () => {
         .gte('reset_date', weekStart.toISOString().split('T')[0]);
 
       const stats = { mcqs_today: 0, pdfs_this_week: 0, ai_queries_today: 0 };
-      usageData?.forEach((usage: any) => {
+      usageData?.forEach((usage) => {
         if (usage.feature === 'mcq' && usage.reset_date === today) {
           stats.mcqs_today = usage.usage_count;
         } else if (usage.feature === 'pdf_download') {
@@ -136,7 +136,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -320,6 +320,7 @@ const Dashboard = () => {
       </main>
 
       <ConditionalFooter />
+      <Footer />
     </div>
   );
 };

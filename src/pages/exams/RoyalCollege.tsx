@@ -9,6 +9,8 @@ import { RoyalCollegeWaitlistModal } from "@/components/RoyalCollegeWaitlistModa
 import { Sparkles, ArrowRight, Users, MapPin, BookOpen } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import { ROYAL_COLLEGE_EXAMS, ROYAL_COLLEGE_GROUPS } from "@/data/royalCollegeExams";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const RoyalCollege = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -48,6 +50,8 @@ const RoyalCollege = () => {
         structuredData={structuredData}
       />
 
+      <Navigation />
+
       <div className="min-h-screen">
         {/* Hero Section */}
         <section className="relative bg-gradient-to-br from-primary via-primary/90 to-primary/70 text-primary-foreground py-20 px-4">
@@ -56,18 +60,18 @@ const RoyalCollege = () => {
               <Sparkles className="h-4 w-4 mr-2" />
               Coming Soon
             </Badge>
-            
+
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Royal College Exams
             </h1>
-            
+
             <p className="text-lg md:text-xl opacity-90 mb-8 max-w-3xl mx-auto">
-              We're building consultant-led preparation for more Royal College exams. 
+              We're building consultant-led preparation for more Royal College exams.
               Tell us what you need—get early access and launch updates.
             </p>
-            
-            <Button 
-              size="lg" 
+
+            <Button
+              size="lg"
               variant="secondary"
               onClick={() => handleJoinWaitlist()}
               className="gap-2"
@@ -85,7 +89,7 @@ const RoyalCollege = () => {
               const groupExams = ROYAL_COLLEGE_EXAMS
                 .filter(e => e.group === groupName)
                 .sort((a, b) => a.title.localeCompare(b.title));
-              
+
               if (groupExams.length === 0) return null;
 
               return (
@@ -93,11 +97,11 @@ const RoyalCollege = () => {
                   <h2 className="text-2xl font-bold mb-6 text-foreground">
                     {groupName}
                   </h2>
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                     {groupExams.map((exam) => (
-                      <Card 
-                        key={exam.id} 
+                      <Card
+                        key={exam.id}
                         className="hover:border-primary/50 transition-all duration-200 hover:shadow-lg"
                       >
                         <CardHeader className="p-4 sm:p-6">
@@ -112,8 +116,8 @@ const RoyalCollege = () => {
                           </p>
                         </CardHeader>
                         <CardContent className="p-4 sm:p-6 pt-0">
-                          <Button 
-                            className="w-full" 
+                          <Button
+                            className="w-full"
                             variant="outline"
                             onClick={() => handleJoinWaitlist(exam.id)}
                           >
@@ -135,7 +139,7 @@ const RoyalCollege = () => {
             <h2 className="text-3xl font-bold mb-8">
               Explore What's Available Now
             </h2>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/mentors">
                 <Button size="lg" variant="secondary" className="w-full sm:w-auto gap-2">
@@ -143,14 +147,14 @@ const RoyalCollege = () => {
                   Meet Mentors
                 </Button>
               </Link>
-              
+
               <Link to="/gapmap">
                 <Button size="lg" variant="secondary" className="w-full sm:w-auto gap-2">
                   <MapPin className="h-4 w-4" />
                   Explore GapMap™
                 </Button>
               </Link>
-              
+
               <Link to="/products">
                 <Button size="lg" variant="secondary" className="w-full sm:w-auto gap-2">
                   <BookOpen className="h-4 w-4" />
@@ -167,37 +171,38 @@ const RoyalCollege = () => {
             <h2 className="text-3xl font-bold mb-8 text-center">
               Frequently Asked Questions
             </h2>
-            
+
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="launch">
                 <AccordionTrigger>When will programmes launch?</AccordionTrigger>
                 <AccordionContent>
-                  We're building these programmes based on demand. Join the waitlist 
-                  to be notified when your exam opens for enrollment. Early waitlist 
+                  We're building these programmes based on demand. Join the waitlist
+                  to be notified when your exam opens for enrollment. Early waitlist
                   members will receive pilot pricing and exclusive access.
                 </AccordionContent>
               </AccordionItem>
-              
+
               <AccordionItem value="included">
                 <AccordionTrigger>What's included?</AccordionTrigger>
                 <AccordionContent>
-                  Each programme will include consultant-led prep, exam-aligned content, 
-                  mock assessments, and mentor support tailored to that Royal College exam. 
+                  Each programme will include consultant-led prep, exam-aligned content,
+                  mock assessments, and mentor support tailored to that Royal College exam.
                   We follow the same high standards as our existing PLAB, MRCP, and MRCS programmes.
                 </AccordionContent>
               </AccordionItem>
-              
+
               <AccordionItem value="pricing">
                 <AccordionTrigger>What will pricing be?</AccordionTrigger>
                 <AccordionContent>
-                  Waitlist members will receive early access and pilot pricing announcements 
-                  before public launch. We're committed to keeping our programmes accessible 
+                  Waitlist members will receive early access and pilot pricing announcements
+                  before public launch. We're committed to keeping our programmes accessible
                   to international medical graduates and UK trainees.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
         </section>
+        <Footer />
       </div>
 
       {/* Waitlist Modal */}

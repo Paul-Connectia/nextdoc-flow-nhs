@@ -3,10 +3,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Users, Globe, Award, Heart, Trophy, Mail, Phone, MessageCircle } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +18,7 @@ const About = () => {
               About NextDoc UK
             </h1>
             <p className="text-xl leading-relaxed opacity-90">
-              Empowering medical graduates to successfully transition into the NHS. 
+              Empowering medical graduates to successfully transition into the NHS.
               We provide comprehensive support, training, and mentorship for doctors beginning their UK healthcare journey.
             </p>
           </div>
@@ -35,8 +38,8 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  To bridge the gap between medical expertise and NHS requirements, 
-                  ensuring every qualified doctor can contribute meaningfully to UK healthcare while 
+                  To bridge the gap between medical expertise and NHS requirements,
+                  ensuring every qualified doctor can contribute meaningfully to UK healthcare while
                   advancing their professional journey with confidence and competence.
                 </p>
               </CardContent>
@@ -51,8 +54,8 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  A world where talented medical graduates seamlessly integrate into 
-                  the NHS, bringing diverse perspectives and expertise that strengthen healthcare 
+                  A world where talented medical graduates seamlessly integrate into
+                  the NHS, bringing diverse perspectives and expertise that strengthen healthcare
                   delivery across the United Kingdom.
                 </p>
               </CardContent>
@@ -81,7 +84,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Learn from experienced NHS consultants and doctors who have 
+                  Learn from experienced NHS consultants and doctors who have
                   successfully navigated the same journey you're on.
                 </p>
               </CardContent>
@@ -96,7 +99,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Our mentors have guided doctors through NHS transitions, sharing practical insights, 
+                  Our mentors have guided doctors through NHS transitions, sharing practical insights,
                   leadership experience, and compassion grounded in real-world practice.
                 </p>
               </CardContent>
@@ -111,7 +114,7 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  From exam preparation to job placement, we provide end-to-end guidance 
+                  From exam preparation to job placement, we provide end-to-end guidance
                   for your complete NHS career journey.
                 </p>
               </CardContent>
@@ -129,7 +132,7 @@ const About = () => {
               Meet the experienced NHS professionals who've walked the same path and now guide doctors to success
             </p>
           </div>
-          
+
           <div className="space-y-12">
             {/* Dr. Arjun Patel Detailed Story */}
             <Card className="overflow-hidden">
@@ -137,8 +140,8 @@ const About = () => {
                 <div className="md:col-span-1 p-6 bg-muted/30 flex flex-col items-center justify-center">
                   <div className="relative mb-4">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-border">
-                      <img 
-                        src="/lovable-uploads/a1974f11-8f3f-40c0-b5d8-6e22f135a5e8.png" 
+                      <img
+                        src="/lovable-uploads/a1974f11-8f3f-40c0-b5d8-6e22f135a5e8.png"
                         alt="Dr. Arjun Patel"
                         className="w-full h-full object-cover"
                       />
@@ -155,18 +158,18 @@ const About = () => {
                   <h4 className="text-lg font-semibold mb-3">From Mumbai Medical College to NHS Leadership</h4>
                   <div className="prose prose-sm max-w-none text-muted-foreground space-y-3">
                     <p>
-                      Dr. Patel arrived in the UK in 2008 with his medical degree from Mumbai but faced the 
-                      reality that qualifications required validation. His PLAB journey took 
+                      Dr. Patel arrived in the UK in 2008 with his medical degree from Mumbai but faced the
+                      reality that qualifications required validation. His PLAB journey took
                       8 months of dedicated preparation while working part-time jobs to support himself.
                     </p>
                     <p>
-                      "The most challenging aspect wasn't the medical knowledge - it was understanding 
-                      NHS protocols, communication styles, and cultural nuances," Dr. Patel reflects. 
+                      "The most challenging aspect wasn't the medical knowledge - it was understanding
+                      NHS protocols, communication styles, and cultural nuances," Dr. Patel reflects.
                       After passing PLAB, he secured his first NHS position as an FY2 equivalent.
                     </p>
                     <p>
-                      Today, as a Consultant Cardiologist leading a busy cardiac unit, Dr. Patel has 
-                      mentored over 200 doctors. His systematic approach to NHS integration 
+                      Today, as a Consultant Cardiologist leading a busy cardiac unit, Dr. Patel has
+                      mentored over 200 doctors. His systematic approach to NHS integration
                       forms the foundation of NextDoc UK's methodology.
                     </p>
                   </div>
@@ -185,8 +188,8 @@ const About = () => {
                 <div className="md:col-span-1 p-6 bg-muted/30 flex flex-col items-center justify-center">
                   <div className="relative mb-4">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-border">
-                      <img 
-                        src="/lovable-uploads/0c62a90c-c3bd-4245-979a-ebe1a0e8cf1e.png" 
+                      <img
+                        src="/lovable-uploads/0c62a90c-c3bd-4245-979a-ebe1a0e8cf1e.png"
                         alt="Dr. Priya Sharma"
                         className="w-full h-full object-cover"
                       />
@@ -203,18 +206,18 @@ const About = () => {
                   <h4 className="text-lg font-semibold mb-3">From Karachi to Leading Emergency Medicine</h4>
                   <div className="prose prose-sm max-w-none text-muted-foreground space-y-3">
                     <p>
-                      Dr. Sharma's journey began with her MBBS from Dow University in Karachi. She completed 
-                      her PLAB in just 6 months through intensive preparation and arrived in the UK with 
+                      Dr. Sharma's journey began with her MBBS from Dow University in Karachi. She completed
+                      her PLAB in just 6 months through intensive preparation and arrived in the UK with
                       clear goals for emergency medicine specialisation.
                     </p>
                     <p>
-                      "Emergency medicine in the UK demanded not just clinical skills but rapid cultural 
-                      adaptation. Every interaction with patients required understanding of NHS systems, 
+                      "Emergency medicine in the UK demanded not just clinical skills but rapid cultural
+                      adaptation. Every interaction with patients required understanding of NHS systems,
                       protocols, and communication standards," she explains.
                     </p>
                     <p>
-                      Now a Senior Specialist Registrar, Dr. Sharma leads emergency response teams and 
-                      has successfully guided 150+ doctors through their NHS transition, 
+                      Now a Senior Specialist Registrar, Dr. Sharma leads emergency response teams and
+                      has successfully guided 150+ doctors through their NHS transition,
                       specialising in high-pressure specialty placements.
                     </p>
                   </div>
@@ -233,8 +236,8 @@ const About = () => {
                 <div className="md:col-span-1 p-6 bg-muted/30 flex flex-col items-center justify-center">
                   <div className="relative mb-4">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-border">
-                      <img 
-                        src="/lovable-uploads/0fa2af72-01b3-48c7-9ab5-ac928ccd9f2e.png" 
+                      <img
+                        src="/lovable-uploads/0fa2af72-01b3-48c7-9ab5-ac928ccd9f2e.png"
                         alt="Dr. Amit Kumar"
                         className="w-full h-full object-cover"
                       />
@@ -251,18 +254,18 @@ const About = () => {
                   <h4 className="text-lg font-semibold mb-3">From Dhaka Medical College to NHS General Medicine</h4>
                   <div className="prose prose-sm max-w-none text-muted-foreground space-y-3">
                     <p>
-                      Dr. Kumar graduated from Dhaka Medical College and completed his PLAB journey in 
-                      7 months while maintaining his clinical knowledge current. His systematic approach 
+                      Dr. Kumar graduated from Dhaka Medical College and completed his PLAB journey in
+                      7 months while maintaining his clinical knowledge current. His systematic approach
                       to preparation became a model for efficient NHS transition.
                     </p>
                     <p>
-                      "General medicine training in the NHS requires comprehensive understanding of multiple 
-                      specialties and excellent communication with multidisciplinary teams. The learning 
+                      "General medicine training in the NHS requires comprehensive understanding of multiple
+                      specialties and excellent communication with multidisciplinary teams. The learning
                       curve was steep but structured preparation made all the difference," he shares.
                     </p>
                     <p>
-                      As a General Medicine Registrar, Dr. Kumar has guided 100+ doctors 
-                      through foundation and core training programmes, emphasising the importance of 
+                      As a General Medicine Registrar, Dr. Kumar has guided 100+ doctors
+                      through foundation and core training programmes, emphasising the importance of
                       comprehensive preparation and systematic career progression.
                     </p>
                   </div>
@@ -287,7 +290,7 @@ const About = () => {
               Our tools are developed using evidence-based methodology and NHS workforce data analysis
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
@@ -298,8 +301,8 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  Our AI-powered tools are built using analysis of NHS workforce data, Royal College 
-                  examination patterns, and validated educational methodologies. Each feature is reviewed 
+                  Our AI-powered tools are built using analysis of NHS workforce data, Royal College
+                  examination patterns, and validated educational methodologies. Each feature is reviewed
                   by NHS professionals to ensure alignment with clinical and educational standards.
                 </p>
               </CardContent>
@@ -314,8 +317,8 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  All educational material undergoes rigorous review by NHS consultants and medical 
-                  education specialists. Our methodology combines medical education research with 
+                  All educational material undergoes rigorous review by NHS consultants and medical
+                  education specialists. Our methodology combines medical education research with
                   continuous feedback from international doctors successfully integrated into the NHS.
                 </p>
               </CardContent>
@@ -357,7 +360,7 @@ const About = () => {
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                 Speak with one of our advisors to learn more about our programs and how we can help you succeed in your NHS career transition.
               </p>
-              
+
               <Dialog>
                 <DialogTrigger asChild>
                   <Button size="lg">
@@ -371,7 +374,7 @@ const About = () => {
                       Choose your preferred method to schedule a free consultation
                     </DialogDescription>
                   </DialogHeader>
-                  
+
                   <div className="space-y-4 py-4">
                     {/* Email Option */}
                     <a
@@ -423,6 +426,7 @@ const About = () => {
           </Card>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

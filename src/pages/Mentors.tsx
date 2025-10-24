@@ -11,6 +11,8 @@ import { BadgeDisplay } from "@/components/BadgeDisplay";
 import { analytics } from "@/lib/analytics";
 import { useState, useMemo, useCallback } from "react";
 import { Mentor, MentorFilters } from "@/types/mentor";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const Mentors = () => {
   const [showOnboardingForm, setShowOnboardingForm] = useState(false);
@@ -23,7 +25,7 @@ const Mentors = () => {
     badgeLevels: [],
     availability: 'all'
   });
-  
+
   const mentors: Mentor[] = [
     {
       name: "Dr. Sarah Johnson",
@@ -41,7 +43,7 @@ const Mentors = () => {
       testimonial: "Having walked the same path, I understand the unique challenges international doctors face in the UK."
     },
     {
-      name: "Prof. Michael Thompson", 
+      name: "Prof. Michael Thompson",
       title: "Consultant Surgeon & Clinical Director",
       hospital: "St. Bartholomew's Hospital",
       location: "London",
@@ -82,7 +84,7 @@ const Mentors = () => {
       mentees: 52,
       badgeLevel: "senior" as const,
       acceptingMentees: false,
-      image: "/api/placeholder/150/150", 
+      image: "/api/placeholder/150/150",
       testimonial: "Emergency medicine taught me quick decision-making. I apply this to help mentees make strategic career choices."
     },
     {
@@ -120,11 +122,11 @@ const Mentors = () => {
   // Filter logic with memoization
   const filteredMentors = useMemo(() => {
     let result = mentors;
-    
+
     // Keyword search
     if (searchFilters.keyword) {
       const lowerKeyword = searchFilters.keyword.toLowerCase();
-      result = result.filter(m => 
+      result = result.filter(m =>
         m.name.toLowerCase().includes(lowerKeyword) ||
         m.title.toLowerCase().includes(lowerKeyword) ||
         m.hospital.toLowerCase().includes(lowerKeyword) ||
@@ -132,7 +134,7 @@ const Mentors = () => {
         m.specialties.some(s => s.toLowerCase().includes(lowerKeyword))
       );
     }
-    
+
     // Specialty filter
     if (searchFilters.specialties.length > 0) {
       result = result.filter(m =>
@@ -141,24 +143,24 @@ const Mentors = () => {
         )
       );
     }
-    
+
     // Badge level filter
     if (searchFilters.badgeLevels.length > 0) {
       result = result.filter(m =>
         searchFilters.badgeLevels.includes(m.badgeLevel)
       );
     }
-    
+
     // Location filter
     if (searchFilters.locations.length > 0) {
       result = result.filter(m =>
         searchFilters.locations.some(loc =>
-          m.hospital.toLowerCase().includes(loc.toLowerCase()) || 
+          m.hospital.toLowerCase().includes(loc.toLowerCase()) ||
           m.location.toLowerCase().includes(loc.toLowerCase())
         )
       );
     }
-    
+
     // Language filter
     if (searchFilters.languages.length > 0) {
       result = result.filter(m =>
@@ -167,7 +169,7 @@ const Mentors = () => {
         )
       );
     }
-    
+
     // Availability filter
     if (searchFilters.availability !== 'all') {
       if (searchFilters.availability === 'accepting') {
@@ -180,19 +182,19 @@ const Mentors = () => {
         result = result.filter(m => !m.acceptingMentees && m.mentees < 40);
       }
     }
-    
+
     return result;
   }, [searchFilters, mentors]);
 
   const handleSearchFilter = useCallback((filters: MentorFilters) => {
     setSearchFilters(filters);
-    
+
     // Analytics
     analytics.track('mentor_search_performed', {
       keyword: filters.keyword,
-      hasFilters: filters.specialties.length > 0 || filters.locations.length > 0 || 
-                  filters.languages.length > 0 || filters.badgeLevels.length > 0 || 
-                  filters.availability !== 'all',
+      hasFilters: filters.specialties.length > 0 || filters.locations.length > 0 ||
+        filters.languages.length > 0 || filters.badgeLevels.length > 0 ||
+        filters.availability !== 'all',
       resultsCount: filteredMentors.length
     });
   }, [filteredMentors.length]);
@@ -221,7 +223,7 @@ const Mentors = () => {
       description: "Matched with mentors based on specialty, background, and career goals"
     },
     {
-      title: "Regular Sessions", 
+      title: "Regular Sessions",
       description: "Monthly one-on-one sessions with flexible scheduling"
     },
     {
@@ -244,6 +246,7 @@ const Mentors = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -252,11 +255,11 @@ const Mentors = () => {
               Mentor Insights & Guidance
             </h1>
             <p className="text-xl leading-relaxed opacity-90 mb-8">
-              Connect with experienced NHS consultants and medical professionals 
+              Connect with experienced NHS consultants and medical professionals
               who have successfully navigated the UK healthcare system.
             </p>
           </div>
-          
+
           {/* Search Bar + CTA */}
           <div className="mt-8">
             <div className="flex flex-col md:flex-row gap-4 items-start max-w-5xl mx-auto">
@@ -268,12 +271,12 @@ const Mentors = () => {
                   filteredCount={filteredMentors.length}
                 />
               </div>
-              
+
               {/* 30% width on desktop */}
               <div className="w-full md:w-[30%]">
-                <Button 
-                  size="lg" 
-                  variant="secondary" 
+                <Button
+                  size="lg"
+                  variant="secondary"
                   className="w-full h-12"
                   onClick={() => setShowOnboardingForm(true)}
                 >
@@ -291,7 +294,7 @@ const Mentors = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">Meet Our Expert Mentors</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Learn from experienced professionals who have successfully transitioned to the NHS 
+              Learn from experienced professionals who have successfully transitioned to the NHS
               and are passionate about supporting the next generation
             </p>
           </div>
@@ -301,14 +304,14 @@ const Mentors = () => {
               <p className="text-muted-foreground text-lg mb-4">
                 No mentors match your search criteria
               </p>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setSearchFilters({
-                  keyword: '', 
-                  specialties: [], 
-                  locations: [], 
-                  languages: [], 
-                  badgeLevels: [], 
+                  keyword: '',
+                  specialties: [],
+                  locations: [],
+                  languages: [],
+                  badgeLevels: [],
                   availability: 'all'
                 })}
               >
@@ -332,17 +335,17 @@ const Mentors = () => {
                         <div className="mb-2">
                           <BadgeDisplay level={mentor.badgeLevel} showTooltip />
                         </div>
-                        
+
                         <CardTitle className="text-xl">{mentor.name}</CardTitle>
-                      <p className="text-muted-foreground font-medium">{mentor.title}</p>
-                      <div className="flex items-center space-x-2 text-sm text-muted-foreground mt-1">
-                        <MapPin className="h-4 w-4" />
-                        <span>{mentor.hospital}</span>
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm text-muted-foreground mt-2">
-                        <Users className="h-4 w-4" />
-                        <span>{mentor.mentees} mentees</span>
-                      </div>
+                        <p className="text-muted-foreground font-medium">{mentor.title}</p>
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground mt-1">
+                          <MapPin className="h-4 w-4" />
+                          <span>{mentor.hospital}</span>
+                        </div>
+                        <div className="flex items-center space-x-1 text-sm text-muted-foreground mt-2">
+                          <Users className="h-4 w-4" />
+                          <span>{mentor.mentees} mentees</span>
+                        </div>
                       </div>
                     </div>
                   </CardHeader>
@@ -352,7 +355,7 @@ const Mentors = () => {
                         <p className="text-sm text-muted-foreground">Background</p>
                         <p className="text-sm">{mentor.background}</p>
                       </div>
-                      
+
                       <div>
                         <p className="text-sm text-muted-foreground mb-2">Specialties</p>
                         <div className="flex flex-wrap gap-2">
@@ -380,7 +383,7 @@ const Mentors = () => {
                         <p className="text-sm italic">{mentor.testimonial}</p>
                       </div>
 
-                      <Button 
+                      <Button
                         className="w-full focus-visible:ring-2 focus-visible:ring-ring"
                         disabled={!mentor.acceptingMentees}
                       >
@@ -462,7 +465,7 @@ const Mentors = () => {
             <p className="text-muted-foreground mb-8 text-lg">
               Share your expertise and help shape the next generation of medical professionals in the NHS.
             </p>
-            
+
             <div className="grid md:grid-cols-3 gap-6 mb-8">
               <Card>
                 <CardContent className="p-6 text-center">
@@ -471,7 +474,7 @@ const Mentors = () => {
                   <p className="text-sm text-muted-foreground">Guide career decisions and professional development</p>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardContent className="p-6 text-center">
                   <Calendar className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -479,7 +482,7 @@ const Mentors = () => {
                   <p className="text-sm text-muted-foreground">Monthly sessions that fit your schedule</p>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardContent className="p-6 text-center">
                   <Star className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -490,17 +493,17 @@ const Mentors = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="w-full"
                 onClick={() => setShowOnboardingForm(true)}
               >
                 Apply to Mentor
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
+              <Button
+                variant="outline"
+                size="lg"
                 className="w-full"
                 onClick={() => {
                   setShowMentorInfoModal(true);
@@ -534,9 +537,9 @@ const Mentors = () => {
 
       {/* Mentor Onboarding Form Modal */}
       {showOnboardingForm && (
-        <EnhancedMentorOnboardingForm 
+        <EnhancedMentorOnboardingForm
           isOpen={showOnboardingForm}
-          onClose={() => setShowOnboardingForm(false)} 
+          onClose={() => setShowOnboardingForm(false)}
         />
       )}
 
@@ -549,6 +552,7 @@ const Mentors = () => {
           setShowOnboardingForm(true);
         }}
       />
+      <Footer />
     </div>
   );
 };

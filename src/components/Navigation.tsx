@@ -48,16 +48,16 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0" aria-label="NextDoc UK home">
-            <img 
+            <img
               src="/lovable-uploads/ngd-logo-white.jpg"
-              alt="NextDoc UK logo" 
+              alt="NextDoc UK logo"
               className="h-10 sm:h-12 md:h-14 w-auto transition-transform group-hover:scale-105"
             />
             {/* Desktop branding */}
             <div className="hidden md:flex flex-col leading-tight">
               <span className="text-lg font-semibold text-foreground">NextDoc UK</span>
               <div className="flex flex-col text-xs text-muted-foreground">
-                <span>Built by Doctors, For Doctors</span>
+                <span>Built by Doctors, <br /> For Doctors</span>
                 <span className="font-medium text-primary">AI Powered</span>
               </div>
             </div>
@@ -69,7 +69,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-10">
+          <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-foreground hover:text-primary transition-colors">
               Home
             </Link>
@@ -79,7 +79,7 @@ const Navigation = () => {
             <Link to="/products" className="text-foreground hover:text-primary transition-colors">
               Products
             </Link>
-            
+
             {/* Exams Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors">
@@ -118,8 +118,8 @@ const Navigation = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link 
-                    to="/exams/royal-college" 
+                  <Link
+                    to="/exams/royal-college"
                     className="w-full cursor-pointer"
                     onClick={() => analytics.track('rc_dropdown_clicked')}
                   >
@@ -169,8 +169,8 @@ const Navigation = () => {
                 <Youtube className="h-5 w-5" />
               </a>
             </div>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={() => setIsSearchOpen(true)}
               className="flex items-center gap-2"
@@ -230,76 +230,76 @@ const Navigation = () => {
 
               {/* Main Navigation */}
               <div className="flex flex-col space-y-2">
-                <Link 
-                  to="/" 
+                <Link
+                  to="/"
                   className="text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Home
                 </Link>
-                <Link 
-                  to="/about" 
+                <Link
+                  to="/about"
                   className="text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   About Us
                 </Link>
-                <Link 
-                  to="/products" 
+                <Link
+                  to="/products"
                   className="text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Products
                 </Link>
-                
+
                 {/* Exams Section */}
                 <div className="space-y-1 pt-2">
                   <p className="text-muted-foreground text-sm font-medium py-1 px-2">Exams</p>
                   <div className="pl-3 space-y-1">
-                    <Link 
-                      to="/english" 
+                    <Link
+                      to="/english"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       English Proficiency
                     </Link>
-                    <Link 
-                      to="/exams/plab" 
+                    <Link
+                      to="/exams/plab"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       PLAB Exam Suite
                     </Link>
-                    <Link 
-                      to="/exams/mrcp" 
+                    <Link
+                      to="/exams/mrcp"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       MRCP
                     </Link>
-                    <Link 
-                      to="/exams/mrcs" 
+                    <Link
+                      to="/exams/mrcs"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       MRCS
                     </Link>
-                    <Link 
-                      to="/exams/mrcog" 
+                    <Link
+                      to="/exams/mrcog"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       MRCOG
                     </Link>
-                    <Link 
-                      to="/exams/mrcpch" 
+                    <Link
+                      to="/exams/mrcpch"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       MRCPCH
                     </Link>
-                    <Link 
-                      to="/exams/royal-college" 
+                    <Link
+                      to="/exams/royal-college"
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => {
                         setIsMenuOpen(false);
@@ -310,16 +310,16 @@ const Navigation = () => {
                     </Link>
                   </div>
                 </div>
-                
-                <Link 
-                  to="/labs" 
+
+                <Link
+                  to="/labs"
                   className="text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   NextDoc Labs
                 </Link>
-                <Link 
-                  to="/mentors" 
+                <Link
+                  to="/mentors"
                   className="text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -363,14 +363,14 @@ const Navigation = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Scroll indicator - subtle visual cue */}
               <div className="sticky bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-background to-transparent pointer-events-none" />
             </div>
           </div>
         )}
       </div>
-      
+
       {/* Search Modal */}
       <EnhancedSearchModal open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </nav>

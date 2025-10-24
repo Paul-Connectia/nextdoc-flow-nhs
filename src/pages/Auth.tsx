@@ -61,7 +61,7 @@ const Auth = () => {
         title: "Account created successfully!",
         description: "Please check your email to verify your account.",
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error('Sign up error:', error);
       setError(error.message || 'Failed to create account');
     } finally {
@@ -92,7 +92,7 @@ const Auth = () => {
         description: "You have been signed in successfully.",
       });
       navigate('/dashboard');
-    } catch (error: any) {
+    } catch (error) {
       console.error('Sign in error:', error);
       setError(error.message || 'Failed to sign in');
     } finally {
@@ -110,14 +110,14 @@ const Auth = () => {
               Your comprehensive NHS career platform
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="signin">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
@@ -135,7 +135,7 @@ const Auth = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="signin-password">Password</Label>
                     <div className="relative">
@@ -151,20 +151,20 @@ const Auth = () => {
                       />
                     </div>
                   </div>
-                  
+
                   {error && (
                     <Alert variant="destructive">
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )}
-                  
+
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Sign In
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="signup">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -183,7 +183,7 @@ const Auth = () => {
                         />
                       </div>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name</Label>
                       <Input
@@ -196,7 +196,7 @@ const Auth = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="signup-email">Email</Label>
                     <div className="relative">
@@ -212,7 +212,7 @@ const Auth = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label htmlFor="signup-password">Password</Label>
                     <div className="relative">
@@ -229,13 +229,13 @@ const Auth = () => {
                       />
                     </div>
                   </div>
-                  
+
                   {error && (
                     <Alert variant="destructive">
                       <AlertDescription>{error}</AlertDescription>
                     </Alert>
                   )}
-                  
+
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     Create Account
@@ -244,7 +244,7 @@ const Auth = () => {
               </TabsContent>
             </Tabs>
           </CardContent>
-          
+
           <CardFooter className="text-center">
             <p className="text-sm text-muted-foreground">
               <Link to="/" className="text-primary hover:underline">
