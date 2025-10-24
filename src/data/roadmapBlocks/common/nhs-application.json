@@ -1,0 +1,15 @@
+{
+  "id": "nhs-job-application",
+  "title": "NHS Job Application",
+  "description": "Apply for NHS training posts or consultant positions through NHS Jobs portal",
+  "statusRules": ["completedIf: status.nhsExperience exists"],
+  "actions": [
+    { "label": "NHS Jobs Portal", "href": "https://www.jobs.nhs.uk" },
+    { "label": "CV Preparation", "href": "/cv-booster" },
+    { "label": "Interview Prep", "href": "/interviewsim" }
+  ],
+  "deadlineRules": [
+    { "label": "NHS application window", "daysFromToday": 60 }
+  ],
+  "evidence": ["Job application form", "Supporting documents", "References"]
+}

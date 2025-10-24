@@ -1,0 +1,15 @@
+{
+  "id": "mrcp-paces",
+  "title": "MRCP PACES Examination",
+  "description": "Practical Assessment of Clinical Examination Skills - a clinical carousel testing communication skills, physical examination, and clinical reasoning",
+  "statusRules": ["completedIf: exams.completed includes 'MRCP PACES'"],
+  "actions": [
+    { "label": "Book PACES", "href": "https://www.mrcpuk.org/mrcpuk-examinations/paces" },
+    { "label": "PACES Stations Guide", "href": "https://www.mrcpuk.org/mrcpuk-examinations/paces/stations" },
+    { "label": "Clinical Skills Practice", "href": "/interviewsim" }
+  ],
+  "deadlineRules": [
+    { "label": "PACES registration deadline", "daysFromToday": 150 }
+  ],
+  "evidence": ["PACES pass certificate", "Station feedback", "Clinical competence logs"]
+}

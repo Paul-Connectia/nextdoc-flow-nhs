@@ -1,0 +1,420 @@
+{
+  "mrcp": {
+    "title": "MRCP Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCP Part 1","MRCP Part 2 Written","MRCP PACES"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcpBuilder"
+  },
+
+  "mrcp-sce": {
+    "title": "MRCP Specialty Certificate Examination Pathway",
+    "steps": {
+      "exams": {
+        "options": [
+          "SCE – Acute Medicine",
+          "SCE – Cardiology",
+          "SCE – Clinical Pharmacology & Therapeutics",
+          "SCE – Dermatology",
+          "SCE – Endocrinology & Diabetes",
+          "SCE – Gastroenterology (ESEGH)",
+          "SCE – Geriatric Medicine",
+          "SCE – Infectious Diseases",
+          "SCE – Medical Oncology",
+          "SCE – Nephrology (ESENeph)",
+          "SCE – Neurology",
+          "SCE – Palliative Medicine",
+          "SCE – Respiratory Medicine",
+          "SCE – Rheumatology"
+        ],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "sceBuilder"
+  },
+
+  "mrcs": {
+    "title": "MRCS Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCS Part A","MRCS Part B (OSCE)"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcsBuilder"
+  },
+
+  "frcs": {
+    "title": "FRCS Pathway",
+    "steps": {
+      "exams": {
+        "options": [
+          "FRCS (General Surgery)",
+          "FRCS (Trauma & Orthopaedics)",
+          "FRCS (ORL-HNS)",
+          "FRCS (Plastic Surgery)",
+          "FRCS (Urology)",
+          "FRCS (Neurosurgery)",
+          "FRCS (Paediatric Surgery)",
+          "FRCS (Cardiothoracic Surgery)",
+          "FRCS (Vascular Surgery)",
+          "FRCS (Oral & Maxillofacial Surgery)"
+        ],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcsBuilder"
+  },
+
+  "frca": {
+    "title": "FRCA (Anaesthetics) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["Primary FRCA","Final FRCA"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcaBuilder"
+  },
+
+  "ffpmrca": {
+    "title": "FFPMRCA (Pain Medicine) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FFPMRCA Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "ffpmrcaBuilder"
+  },
+
+  "fficm": {
+    "title": "FFICM (Intensive Care Medicine) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FFICM Primary","FFICM Final OSCE/SOE"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "fficmBuilder"
+  },
+
+  "frcr-cr": {
+    "title": "FRCR (Clinical Radiology) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["First FRCR (Physics & Anatomy)","Final FRCR Part A","Final FRCR Part B"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcrCRBuilder"
+  },
+
+  "frcr-co": {
+    "title": "FRCR (Clinical Oncology) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCR CO Part 1","FRCR CO Part 2A","FRCR CO Part 2B"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcrCOBuilder"
+  },
+
+  "frcpath-histo": {
+    "title": "FRCPath Histopathology Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Histopathology Part 1","FRCPath Histopathology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathHistoBuilder"
+  },
+  "frcpath-haem": {
+    "title": "FRCPath Haematology Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Haematology Part 1","FRCPath Haematology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathHaemBuilder"
+  },
+  "frcpath-micro": {
+    "title": "FRCPath Medical Microbiology Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Medical Microbiology Part 1","FRCPath Medical Microbiology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathMicroBuilder"
+  },
+  "frcpath-virol": {
+    "title": "FRCPath Virology Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Virology Part 1","FRCPath Virology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathVirolBuilder"
+  },
+  "frcpath-chem": {
+    "title": "FRCPath Chemical Pathology / Clinical Biochemistry Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Chemical Pathology Part 1","FRCPath Chemical Pathology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathChemBuilder"
+  },
+  "frcpath-immun": {
+    "title": "FRCPath Immunology Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Immunology Part 1","FRCPath Immunology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathImmunBuilder"
+  },
+  "frcpath-forensic": {
+    "title": "FRCPath Forensic Pathology Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCPath Forensic Pathology Part 1","FRCPath Forensic Pathology Part 2"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcpathForensicBuilder"
+  },
+
+  "frcophth": {
+    "title": "FRCOphth Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCOphth Part 1","FRCOphth Part 2 (Written)","FRCOphth Part 2 (OSCE)","FRCOphth Final Clinical"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcophthBuilder"
+  },
+
+  "mrcpsych": {
+    "title": "MRCPsych Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCPsych Paper A","MRCPsych Paper B","MRCPsych CASC"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcpsychBuilder"
+  },
+
+  "mrcpch": {
+    "title": "MRCPCH Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCPCH FOP","MRCPCH Theory & Science (TAS)","MRCPCH AKP","MRCPCH Clinical"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcpchBuilder"
+  },
+
+  "mrcog": {
+    "title": "MRCOG Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCOG Part 1","MRCOG Part 2","MRCOG Part 3 (OSCE)"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcogBuilder"
+  },
+  "drcog": {
+    "title": "DRCOG (Diploma) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["DRCOG Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "drcogBuilder"
+  },
+
+  "mrcgp": {
+    "title": "MRCGP Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCGP AKT","MRCGP SCA"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcgpBuilder"
+  },
+
+  "mrcem": {
+    "title": "MRCEM Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MRCEM Primary SBA","MRCEM Intermediate SAQ","MRCEM OSCE"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mrcemBuilder"
+  },
+  "frcem": {
+    "title": "FRCEM Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FRCEM Intermediate SBA","FRCEM Final SAQ","FRCEM Final OSCE/Management"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "frcemBuilder"
+  },
+
+  "dohns": {
+    "title": "DOHNS (Diploma in Otolaryngology–HNS) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["DOHNS OSCE"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "dohnsBuilder"
+  },
+
+  "mfph": {
+    "title": "MFPH (Public Health) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MFPH Part A","MFPH Part B"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mfphBuilder"
+  },
+  "dfph": {
+    "title": "DFPH (Public Health Diploma) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["DFPH Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "dfphBuilder"
+  },
+
+  "mfom": {
+    "title": "MFOM (Occupational Medicine) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MFOM Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mfomBuilder"
+  },
+  "ffom": {
+    "title": "FFOM (Occupational Medicine Fellowship) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FFOM Examination/Portfolio"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "ffomBuilder"
+  },
+
+  "mfsrh": {
+    "title": "MFSRH (Sexual & Reproductive Health) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MFSRH Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mfsrhBuilder"
+  },
+  "dfsrh": {
+    "title": "DFSRH (SRH Diploma) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["DFSRH Assessment"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "dfsrhBuilder"
+  },
+
+  "mfsem": {
+    "title": "MFSEM (Sport & Exercise Medicine) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MFSEM Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mfsemBuilder"
+  },
+  "ffsem": {
+    "title": "FFSEM (Sport & Exercise Medicine Fellowship) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FFSEM Examination/Portfolio"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "ffsemBuilder"
+  },
+
+  "mftm": {
+    "title": "MFTM (Travel Medicine) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MFTM Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mftmBuilder"
+  },
+  "fftm": {
+    "title": "FFTM (Travel Medicine Fellowship) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FFTM Examination/Portfolio"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "fftmBuilder"
+  },
+
+  "mfpm": {
+    "title": "MFPM (Pharmaceutical Medicine) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["MFPM Examination"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "mfpmBuilder"
+  },
+  "ffpm": {
+    "title": "FFPM (Pharmaceutical Medicine Fellowship) Pathway",
+    "steps": {
+      "exams": {
+        "options": ["FFPM Assessment/Portfolio"],
+        "otherField": "Currently Studying For"
+      }
+    },
+    "roadmapBuilder": "ffpmBuilder"
+  }
+}

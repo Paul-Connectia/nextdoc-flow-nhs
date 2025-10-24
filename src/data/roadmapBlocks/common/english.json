@@ -1,0 +1,15 @@
+{
+  "id": "english-language",
+  "title": "English Language Proficiency",
+  "description": "Demonstrate English language proficiency through IELTS Academic (minimum 7.0 overall, 7.0 each section) or OET Medicine (minimum Grade B in all sections)",
+  "statusRules": ["completedIf: exams.completed includes 'IELTS Academic' OR 'OET Medicine'"],
+  "actions": [
+    { "label": "IELTS Booking", "href": "https://www.ielts.org" },
+    { "label": "OET Booking", "href": "https://www.occupationalenglishtest.org" },
+    { "label": "English Resources", "href": "/english-proficiency" }
+  ],
+  "deadlineRules": [
+    { "label": "English test deadline", "daysFromToday": 120 }
+  ],
+  "evidence": ["IELTS/OET certificate", "Test results transcript"]
+}

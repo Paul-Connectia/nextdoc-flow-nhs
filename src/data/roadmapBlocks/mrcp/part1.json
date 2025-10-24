@@ -1,0 +1,15 @@
+{
+  "id": "mrcp-part1",
+  "title": "MRCP Part 1 Examination",
+  "description": "Written exam covering basic medical sciences including physiology, anatomy, biochemistry, pharmacology, and clinical pathology",
+  "statusRules": ["completedIf: exams.completed includes 'MRCP Part 1'"],
+  "actions": [
+    { "label": "Book Exam", "href": "https://www.mrcpuk.org/mrcpuk-examinations/part-1" },
+    { "label": "View Syllabus", "href": "https://www.mrcpuk.org/mrcpuk-examinations/part-1/syllabus" },
+    { "label": "Study Resources", "href": "/study-materials" }
+  ],
+  "deadlineRules": [
+    { "label": "MRCP Part 1 registration", "daysFromToday": 90 }
+  ],
+  "evidence": ["Exam pass certificate", "Results notification", "Revision log"]
+}

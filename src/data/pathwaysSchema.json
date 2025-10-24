@@ -1,0 +1,38 @@
+{
+  "plab": {
+    "label": "PLAB Pathway",
+    "examParts": ["PLAB 1", "PLAB 2"]
+  },
+  "mrcp": {
+    "label": "MRCP Pathway",
+    "examParts": ["MRCP Part 1", "MRCP Part 2 Written", "MRCP PACES"]
+  },
+  "mrcs": {
+    "label": "MRCS Pathway",
+    "examParts": ["MRCS Part A", "MRCS Part B (OSCE)"]
+  },
+  "mrcog": {
+    "label": "MRCOG Pathway",
+    "examParts": ["MRCOG Part 1", "MRCOG Part 2", "MRCOG Part 3 (OSCE)"]
+  },
+  "mrcpch": {
+    "label": "MRCPCH Pathway",
+    "examParts": ["Foundation of Practice (FOP)", "Theory & Science (TAS)", "Applied Knowledge in Practice (AKP)", "Clinical Examination"]
+  },
+  "uk-grad": {
+    "label": "UK Graduate Pathway",
+    "examParts": ["Foundation Year 1 Completed", "Foundation Year 2 Completed", "MSRA (if applicable)"]
+  },
+  "ielts-oet": {
+    "label": "IELTS/OET Pathway",
+    "examParts": ["IELTS Academic", "OET Medicine"]
+  },
+  "returner": {
+    "label": "Return to Practice",
+    "examParts": ["Refresher Course/CPD", "Supervised Practice", "GMC Revalidation Steps"]
+  },
+  "sas-ahp": {
+    "label": "SAS/AHP Pathway",
+    "examParts": ["Portfolio Evidence Mapped", "Workplace Based Assessments", "CESR Application Prep"]
+  }
+}

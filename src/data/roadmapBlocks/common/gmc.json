@@ -1,0 +1,15 @@
+{
+  "id": "gmc-registration",
+  "title": "GMC Registration",
+  "description": "Obtain full registration with the General Medical Council (GMC) to practice medicine in the UK",
+  "statusRules": ["completedIf: personal.gmcNumber exists"],
+  "actions": [
+    { "label": "GMC Registration Portal", "href": "https://www.gmc-uk.org/registration-and-licensing/join-the-register" },
+    { "label": "PMQ Verification", "href": "https://www.gmc-uk.org/registration-and-licensing/join-the-register/before-you-apply/acceptable-primary-medical-qualifications" },
+    { "label": "GMC Guide", "href": "https://www.gmc-uk.org" }
+  ],
+  "deadlineRules": [
+    { "label": "GMC application submission", "daysFromToday": 90 }
+  ],
+  "evidence": ["GMC certificate", "GMC number", "Verification documents"]
+}

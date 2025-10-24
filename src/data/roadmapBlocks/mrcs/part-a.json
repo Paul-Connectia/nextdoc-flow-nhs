@@ -1,0 +1,15 @@
+{
+  "id": "mrcs-part-a",
+  "title": "MRCS Part A Examination",
+  "description": "Written examination testing applied basic sciences relevant to surgical practice",
+  "statusRules": ["completedIf: exams.completed includes 'MRCS Part A'"],
+  "actions": [
+    { "label": "Book Exam", "href": "https://www.intercollegiatemrcs.org.uk/new/part_a.html" },
+    { "label": "View Syllabus", "href": "https://www.intercollegiatemrcs.org.uk/new/syllabus.html" },
+    { "label": "Study Resources", "href": "/study-materials" }
+  ],
+  "deadlineRules": [
+    { "label": "MRCS Part A registration", "daysFromToday": 90 }
+  ],
+  "evidence": ["Exam pass certificate", "Results notification"]
+}

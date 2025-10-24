@@ -1,0 +1,15 @@
+{
+  "id": "mrcp-part2",
+  "title": "MRCP Part 2 Written Examination",
+  "description": "Advanced written examination testing clinical knowledge and problem-solving skills across all medical specialties",
+  "statusRules": ["completedIf: exams.completed includes 'MRCP Part 2 Written'"],
+  "actions": [
+    { "label": "Book Exam", "href": "https://www.mrcpuk.org/mrcpuk-examinations/part-2-written" },
+    { "label": "View Syllabus", "href": "https://www.mrcpuk.org/mrcpuk-examinations/part-2-written/syllabus" },
+    { "label": "Practice Questions", "href": "/study-materials" }
+  ],
+  "deadlineRules": [
+    { "label": "MRCP Part 2 Written registration", "daysFromToday": 120 }
+  ],
+  "evidence": ["Exam pass certificate", "Results letter", "Clinical case logs"]
+}

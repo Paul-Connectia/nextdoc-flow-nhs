@@ -1,0 +1,15 @@
+{
+  "id": "mrcs-part-b",
+  "title": "MRCS Part B OSCE",
+  "description": "Objective Structured Clinical Examination testing clinical and communication skills in surgical practice",
+  "statusRules": ["completedIf: exams.completed includes 'MRCS Part B (OSCE)'"],
+  "actions": [
+    { "label": "Book OSCE", "href": "https://www.intercollegiatemrcs.org.uk/new/part_b.html" },
+    { "label": "OSCE Stations", "href": "https://www.intercollegiatemrcs.org.uk/new/part_b.html" },
+    { "label": "Practice Skills", "href": "/interviewsim" }
+  ],
+  "deadlineRules": [
+    { "label": "MRCS Part B OSCE registration", "daysFromToday": 120 }
+  ],
+  "evidence": ["OSCE pass certificate", "Clinical skills assessment", "Surgical logbook"]
+}
