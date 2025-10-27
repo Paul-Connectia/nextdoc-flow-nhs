@@ -72,55 +72,55 @@ const App = () => (
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
-                <ScrollManager />
-                <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/cv-booster" element={<CVBooster />} />
-              <Route path="/interview-sim" element={<InterviewSim />} />
-            <Route path="/gapmap" element={<GapMap />} />
-            <Route path="/gapmap/other-uk-exams" element={<OtherUKExams />} />
-            <Route path="/gapmap/launch" element={<Launch />} />
-            <Route path="/gapmap/roadmap" element={<RoadmapResult />} />
-            <Route path="/gapmap/:college/:exam/:track" element={<TrackDetail />} />
-              <Route path="/sponsor-match" element={<SponsorMatch />} />
-              <Route path="/english" element={<EnglishProficiency />} />
-              <Route path="/english/writing" element={<WriterPro />} />
-              <Route path="/english/speaking" element={<SpeechSim />} />
-              <Route path="/english/listening" element={<TranscriptAnalyzer />} />
-              <Route path="/english/reading" element={<ReadingAssistant />} />
-              <Route path="/exams/ielts-oet" element={<IELTS_OET />} />
-              <Route path="/exams/plab" element={<PLAB />} />
-              <Route path="/exams/mrcp" element={<MRCP />} />
-              <Route path="/exams/mrcs" element={<MRCS />} />
-              <Route path="/exams/mrcog" element={<MRCOG />} />
-              <Route path="/exams/mrcpch" element={<MRCPCH />} />
-              <Route path="/exams/royal-college" element={<RoyalCollege />} />
-              <Route path="/exams/postgraduate" element={<Postgraduate />} />
-              <Route path="/labs" element={<Research />} />
-              <Route path="/research" element={<Navigate to="/labs" replace />} />
-              <Route path="/white-papers" element={<Navigate to="/labs" replace />} />
-              <Route path="/ndg-labs" element={<Navigate to="/labs" replace />} />
-              <Route path="/mentors" element={<Mentors />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/get-started" element={<GetStarted />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/plab-quiz" element={<PLABQuizPage />} />
-              <Route path="/study-materials" element={<StudyMaterialsPage />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/consultation" element={<Consultation />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/refund" element={<Refund />} />
-              <Route path="/cookies" element={<Cookies />} />
-              <Route path="/checkout/success" element={<CheckoutSuccess />} />
-              <Route path="/checkout/cancel" element={<CheckoutCancel />} />
-              <Route path="/auth/instagram/callback" element={<InstagramVerificationFlow />} />
-              <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
+                  <ScrollManager />
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/products" element={<Products />} />
+                    <Route path="/cv-booster" element={<CVBooster />} />
+                    <Route path="/interviewsim" element={<InterviewSim />} />
+                    <Route path="/gapmap" element={<GapMap />} />
+                    <Route path="/gapmap/other-uk-exams" element={<OtherUKExams />} />
+                    <Route path="/gapmap/launch" element={<Launch />} />
+                    <Route path="/gapmap/roadmap" element={<RoadmapResult />} />
+                    <Route path="/gapmap/:college/:exam/:track" element={<TrackDetail />} />
+                    <Route path="/sponsormatch" element={<SponsorMatch />} />
+                    <Route path="/english" element={<EnglishProficiency />} />
+                    <Route path="/english/writing" element={<WriterPro />} />
+                    <Route path="/english/speaking" element={<SpeechSim />} />
+                    <Route path="/english/listening" element={<TranscriptAnalyzer />} />
+                    <Route path="/english/reading" element={<ReadingAssistant />} />
+                    <Route path="/exams/ielts-oet" element={<IELTS_OET />} />
+                    <Route path="/exams/plab" element={<PLAB />} />
+                    <Route path="/exams/mrcp" element={<MRCP />} />
+                    <Route path="/exams/mrcs" element={<MRCS />} />
+                    <Route path="/exams/mrcog" element={<MRCOG />} />
+                    <Route path="/exams/mrcpch" element={<MRCPCH />} />
+                    <Route path="/exams/royal-college" element={<RoyalCollege />} />
+                    <Route path="/exams/postgraduate" element={<Postgraduate />} />
+                    <Route path="/labs" element={<Research />} />
+                    <Route path="/research" element={<Navigate to="/labs" replace />} />
+                    <Route path="/white-papers" element={<Navigate to="/labs" replace />} />
+                    <Route path="/ndg-labs" element={<Navigate to="/labs" replace />} />
+                    <Route path="/mentors" element={<Mentors />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/get-started" element={<GetStarted />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/plab-quiz" element={<PLABQuizPage />} />
+                    <Route path="/study-materials" element={<StudyMaterialsPage />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/consultation" element={<Consultation />} />
+                    <Route path="/terms" element={<Terms />} />
+                    <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/refund" element={<Refund />} />
+                    <Route path="/cookies" element={<Cookies />} />
+                    <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                    <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+                    <Route path="/auth/instagram/callback" element={<InstagramVerificationFlow />} />
+                    <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
                   </Routes>
                   <AdvancedAIChatbot />
                   <UnifiedConsentBanner />

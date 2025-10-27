@@ -14,44 +14,7 @@ import Footer from "@/components/Footer";
 const Research = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
-  const whitepapers = [
-    {
-      title: "International Medical Graduate Integration in NHS: A 5-Year Analysis",
-      authors: "Dr. Sarah Johnson, Prof. Michael Thompson, Dr. Raj Patel",
-      date: "March 2024",
-      category: "Healthcare Policy",
-      summary: "Comprehensive analysis of IMG integration patterns, success factors, and recommendations for improving transition processes.",
-      downloadCount: "2,847",
-      featured: true
-    },
-    {
-      title: "AI-Enhanced Medical Education: Transforming PLAB Preparation",
-      authors: "Dr. Emily Chen, Dr. Alexander Wright",
-      date: "January 2024",
-      category: "Medical Education",
-      summary: "Research on the effectiveness of AI-powered learning platforms in improving PLAB examination success rates.",
-      downloadCount: "1,923",
-      featured: true
-    },
-    {
-      title: "Mentorship Models in International Medical Career Development",
-      authors: "Prof. David Cameron, Dr. Priya Sharma",
-      date: "November 2023",
-      category: "Career Development",
-      summary: "Evidence-based analysis of mentorship program effectiveness in IMG career progression within NHS trusts.",
-      downloadCount: "1,456",
-      featured: false
-    },
-    {
-      title: "Cultural Competency Training for International Healthcare Professionals",
-      authors: "Dr. Hassan Al-Mahmoud, Dr. Maria Rodriguez",
-      date: "September 2023",
-      category: "Cultural Integration",
-      summary: "Framework for developing cultural competency among international medical graduates entering UK healthcare.",
-      downloadCount: "987",
-      featured: false
-    }
-  ];
+  const whitepapers = [];
 
   const researchAreas = [
     {

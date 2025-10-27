@@ -116,7 +116,7 @@ const AdvancedAIChatbot = () => {
       const userId = session?.session?.user?.id;
 
       const { data, error } = await supabase.functions.invoke('nextdoc-ai-chat', {
-        body: { 
+        body: {
           message: text,
           userId,
           conversationId,
@@ -137,7 +137,7 @@ const AdvancedAIChatbot = () => {
 
     } catch (error: any) {
       console.error('AI chat error:', error);
-      
+
       if (error.message?.includes('limit reached')) {
         toast({
           title: "Usage Limit Reached",
@@ -238,7 +238,7 @@ const AdvancedAIChatbot = () => {
                 </div>
               </div>
             </CardHeader>
-            
+
             <CardContent className="flex-1 flex flex-col p-0">
               {/* Disclaimer Box */}
               <div className="p-3 border-b bg-amber-50/50">
@@ -256,7 +256,7 @@ const AdvancedAIChatbot = () => {
                     {showDisclaimer ? 'Hide' : 'Info'}
                   </Button>
                 </div>
-              {showDisclaimer && (
+                {showDisclaimer && (
                   <div className="mt-2 text-xs text-amber-600 leading-relaxed">
                     This assistant is for educational and career guidance only. It does not provide medical or visa advice. For personalised support, book a consultation with our NHS mentors.
                     {!isPaidUser && (
@@ -297,11 +297,10 @@ const AdvancedAIChatbot = () => {
                       className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[85%] p-3 rounded-lg text-sm leading-relaxed ${
-                          message.sender === 'user'
+                        className={`max-w-[85%] p-3 rounded-lg text-sm leading-relaxed ${message.sender === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-muted text-foreground border'
-                        }`}
+                          }`}
                       >
                         {message.content}
                         {message.sender === 'bot' && (
@@ -331,7 +330,7 @@ const AdvancedAIChatbot = () => {
                   <div ref={messagesEndRef} />
                 </div>
               </ScrollArea>
-              
+
               <div className="p-4 border-t bg-background">
                 <div className="flex space-x-2">
                   <Input
@@ -342,9 +341,9 @@ const AdvancedAIChatbot = () => {
                     className="flex-1 text-sm"
                     disabled={isLoading}
                   />
-                  <Button 
-                    onClick={() => sendMessage()} 
-                    size="icon" 
+                  <Button
+                    onClick={() => sendMessage()}
+                    size="icon"
                     className="shrink-0"
                     disabled={isLoading || !inputValue.trim()}
                   >
@@ -352,15 +351,15 @@ const AdvancedAIChatbot = () => {
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Press Enter to send • Powered by GPT-4.5 • NHS Mentor Assistant
+                  Press Enter to send • NHS Mentor Assistant
                 </p>
               </div>
             </CardContent>
           </Card>
         </div>
       )}
-      
-      <InstagramGateModal 
+
+      <InstagramGateModal
         isOpen={gateModalOpen}
         onClose={() => setGateModalOpen(false)}
         featureName="NextDoc AI Chat"

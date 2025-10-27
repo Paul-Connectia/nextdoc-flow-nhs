@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Globe, GraduationCap, Award, Users, Stethoscope, RotateCcw, ArrowRight, BookOpen } from "lucide-react";
+import { Globe, GraduationCap, Award, Users, Stethoscope, RotateCcw, ArrowRight, BookOpen, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 interface PathwaySelectorProps {
   onSelect: (pathway: string) => void;
@@ -114,12 +115,12 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {pathways.map((pathway) => {
           const Icon = pathway.icon;
-          
+
           // Special handling for "Other UK Exams" - use Link instead of onClick
           if (pathway.id === "other-uk-exams") {
             return (
               <Link key={pathway.id} to="/gapmap/other-uk-exams">
-                <Card 
+                <Card
                   className={`cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br ${pathway.color} h-full`}
                 >
                   <CardHeader>
@@ -139,7 +140,7 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
                       {pathway.steps}
                     </div>
                   </CardHeader>
-                  
+
                   <CardContent>
                     <Button className="w-full group focus-visible:ring-2 focus-visible:ring-ring">
                       Select Pathway
@@ -150,9 +151,9 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
               </Link>
             );
           }
-          
+
           return (
-            <Card 
+            <Card
               key={pathway.id}
               className={`cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br ${pathway.color}`}
               onClick={() => onSelect(pathway.id)}
@@ -174,7 +175,7 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
                   {pathway.steps}
                 </div>
               </CardHeader>
-              
+
               <CardContent>
                 <Button className="w-full group focus-visible:ring-2 focus-visible:ring-ring">
                   Select Pathway
@@ -193,9 +194,64 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
             <p className="text-sm text-blue-700 mb-4">
               Book a consultation with our Principal Mentors to discuss your career goals
             </p>
-            <Button variant="outline" className="border-blue-300 text-blue-700">
-              Book Career Consultation
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" className="border-blue-300 text-blue-700">
+                  Book Career Consultation
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-center">Contact Us</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-6 p-6">
+                  {/* Email Contact */}
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Globe className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold mb-2">Email Us</h3>
+                    <a href="mailto:support@nextdocuk.com" className="text-primary hover:underline font-medium">
+                      support@nextdocuk.com
+                    </a>
+                  </div>
+
+                  {/* UK Contact */}
+                  <div className="text-center border-t pt-6">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Users className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold mb-2">UK Office</h3>
+                    <div className="space-y-2">
+                      <a href="tel:+447733673574" className="block text-primary hover:underline font-medium">
+                        +44 7733673574
+                      </a>
+                      <a href="https://wa.me/447733673574" className="inline-flex items-center text-green-600 hover:underline text-sm">
+                        <Heart className="h-4 w-4 mr-1" />
+                        WhatsApp UK
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* India Contact */}
+                  <div className="text-center border-t pt-6">
+                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Heart className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="font-semibold mb-2">India Office</h3>
+                    <div className="space-y-2">
+                      <a href="tel:+919483540070" className="block text-primary hover:underline font-medium">
+                        +91 9483540070
+                      </a>
+                      <a href="https://wa.me/919483540070" className="inline-flex items-center text-green-600 hover:underline text-sm">
+                        <Heart className="h-4 w-4 mr-1" />
+                        WhatsApp India
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </CardContent>
       </Card>
