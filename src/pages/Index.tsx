@@ -3,22 +3,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import ConditionalFooter from "@/components/ConditionalFooter";
-import { CheckCircle, Users, Trophy, Globe, ArrowRight, Stethoscope, GraduationCap, Heart, Youtube, MessageCircle } from "lucide-react";
+import { CheckCircle, Users, Trophy, Globe, ArrowRight, Stethoscope, GraduationCap, Heart, Youtube, MessageCircle, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 import nhsHeroImage from "@/assets/nhs-medical-hero.jpg";
 import cvBoosterHero from "@/assets/cv-booster-hero.jpg";
 import interviewsimHero from "@/assets/interviewsim-hero.jpg";
 import gapmapHero from "@/assets/gapmap-hero.jpg";
 import sponsormatchHero from "@/assets/sponsormatch-hero.jpg";
-import { MentorOnboardingForm } from "@/components/MentorOnboardingForm";
 import { BuyNowButton } from "@/components/BuyNowButton";
 import { RotatingMentorDisplay } from "@/components/RotatingMentorDisplay";
 import { AISearchConsole } from "@/components/AISearchConsole";
 import { SocialProof } from "@/components/SocialProof";
 import { SEOHead } from "@/components/SEOHead";
 import React, { useState } from "react";
+import EnhancedMentorOnboardingForm from "@/components/EnhancedMentorOnboardingForm";
 
 const Index = () => {
   const [showOnboardingForm, setShowOnboardingForm] = useState(false);
@@ -915,93 +914,113 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-            {/* Dr. Arjun Patel Journey */}
+            {/* Dr. Pradeep Sabapathy Journey */}
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
-                <div className="relative mx-auto mb-3">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-amber-400/30 mx-auto">
+                <div className="mx-auto mb-4">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
                     <img
                       src="/lovable-uploads/a1974f11-8f3f-40c0-b5d8-6e22f135a5e8.png"
-                      alt="Dr. Arjun Patel"
+                      alt="Dr. Pradeep Sabapathy"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <Badge className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-amber-500 to-yellow-600 text-white border-0 text-xs px-2 py-0.5">
-                    Principal Mentor
-                  </Badge>
                 </div>
-                <CardTitle className="text-lg">Dr. Arjun Patel</CardTitle>
-                <p className="text-sm text-muted-foreground">India → NHS Consultant Cardiologist</p>
+                <CardTitle className="text-lg">Dr. Pradeep Sabapathy</CardTitle>
+                <p className="text-sm text-muted-foreground">King's Hospital NHS Foundation Trust</p>
+                <p className="text-sm text-muted-foreground">Manila → NHS Clinical Fellow HPB Transplant Surgery</p>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground font-medium">Experienced NHS Consultant · Specialty Mentor</span>
+                    <span className="text-muted-foreground font-medium">Experienced NHS Specialty Mentor</span>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  "From clearing PLAB to leading cardiology services - the structured approach works."
+                  "From Clearing PLAB to surgery - the structured approach works."
                 </p>
+                <a
+                  href="https://www.linkedin.com/in/dr-pradeep-sabapathy-3a7480276/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 mt-4 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                >
+                  <Linkedin className="h-4 w-4" />
+                  Connect on LinkedIn
+                </a>
               </CardContent>
             </Card>
 
-            {/* Dr. Priya Sharma Journey */}
+            {/* Dr. Shilpa Gopal Journey */}
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
-                <div className="relative mx-auto mb-3">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-teal-400/30 mx-auto">
+                <div className="mx-auto mb-4">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
                     <img
                       src="/lovable-uploads/0c62a90c-c3bd-4245-979a-ebe1a0e8cf1e.png"
-                      alt="Dr. Priya Sharma"
+                      alt="Dr. Shilpa Gopal"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <Badge className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white border-0 text-xs px-2 py-0.5">
-                    Senior Mentor
-                  </Badge>
                 </div>
-                <CardTitle className="text-lg">Dr. Priya Sharma</CardTitle>
-                <p className="text-sm text-muted-foreground">Pakistan → NHS Emergency Medicine SpR</p>
+                <CardTitle className="text-lg">Dr. Shilpa Gopal</CardTitle>
+                <p className="text-sm text-muted-foreground">Royal Brompton Hospital, Chelsea</p>
+                <p className="text-sm text-muted-foreground">India → NHS Cardiology</p>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground font-medium">Experienced NHS Consultant · Specialty Mentor</span>
+                    <span className="text-muted-foreground font-medium">Experienced NHS Specialty Mentor</span>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  "Emergency medicine demanded quick adaptation - systematic preparation was key."
+                  "Cardiology training taught me the importance of comprehensive preparation."
                 </p>
+                <a
+                  href="https://www.linkedin.com/in/dr-shilpa-gopal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 mt-4 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                >
+                  <Linkedin className="h-4 w-4" />
+                  Connect on LinkedIn
+                </a>
               </CardContent>
             </Card>
 
-            {/* Dr. Amit Kumar Journey */}
+            {/* Dr. Roshan Khanderi Journey */}
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
-                <div className="relative mx-auto mb-3">
-                  <div className="w-20 h-20 rounded-full overflow-hidden border-3 border-blue-400/30 mx-auto">
+                <div className="mx-auto mb-4">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mx-auto">
                     <img
-                      src="/lovable-uploads/0fa2af72-01b3-48c7-9ab5-ac928ccd9f2e.png"
-                      alt="Dr. Amit Kumar"
+                      src="/lovable-uploads/roshan-khanderi.jpg"
+                      alt="Dr. Roshan Khanderi"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <Badge className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white border-0 text-xs px-2 py-0.5">
-                    Associate Mentor
-                  </Badge>
                 </div>
-                <CardTitle className="text-lg">Dr. Amit Kumar</CardTitle>
-                <p className="text-sm text-muted-foreground">Bangladesh → NHS General Medicine Registrar</p>
+                <CardTitle className="text-lg">Dr. Roshan Khanderi</CardTitle>
+                <p className="text-sm text-muted-foreground">Bengaluru to London</p>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground font-medium">Experienced NHS Consultant · Specialty Mentor</span>
+                    <span className="text-muted-foreground font-medium">Non-Clinical Mentor, Research, Career Strategy and Governance</span>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mt-3">
-                  "General medicine training taught me the importance of comprehensive preparation."
+                  "Understanding NHS governance and career pathways transforms professional success."
                 </p>
+                <a
+                  href="https://www.linkedin.com/in/dr-roshan-khanderi-366903288/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 mt-4 text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                >
+                  <Linkedin className="h-4 w-4" />
+                  Connect on LinkedIn
+                </a>
               </CardContent>
             </Card>
           </div>
@@ -1065,7 +1084,10 @@ const Index = () => {
 
       {/* Mentor Onboarding Form Modal */}
       {showOnboardingForm && (
-        <MentorOnboardingForm onClose={() => setShowOnboardingForm(false)} />
+        <EnhancedMentorOnboardingForm
+          isOpen={showOnboardingForm}
+          onClose={() => setShowOnboardingForm(false)}
+        />
       )}
 
       <ConditionalFooter />

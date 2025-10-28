@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MessageCircle, X, Send, Bot, Stethoscope, Brain, Heart, Zap } from "lucide-react";
+import { MessageCircle, X, Send, Bot, Stethoscope, Brain, Heart, Zap, Eraser, EraserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -201,7 +201,7 @@ const AdvancedAIChatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 h-[700px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-2rem)]">
+        <div className="fixed inset-0 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-96 sm:h-[700px] sm:max-w-[calc(100vw-2rem)] sm:max-h-[calc(100vh-2rem)]">
           <Card className="h-full flex flex-col shadow-2xl bg-gradient-to-b from-background to-background/95 border-2 border-primary/20">
             <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
               <div className="flex items-center justify-between">
@@ -218,15 +218,6 @@ const AdvancedAIChatbot = () => {
                   </Badge>
                 )}
                 <div className="flex items-center space-x-2">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-primary-foreground hover:bg-primary-foreground/20 h-8 w-8"
-                    onClick={clearConversation}
-                    title="Clear conversation"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -289,7 +280,16 @@ const AdvancedAIChatbot = () => {
                 </div>
               </div>
 
-              <ScrollArea className="flex-1 p-4">
+              <ScrollArea className="flex-1 p-4 relative">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="text-muted-foreground flex absolute top-2 right-0 items-center justify-center mr-5 text-sm hover:bg-primary-foreground/20 h-8 w-8"
+                  onClick={clearConversation}
+                  title="Clear conversation"
+                >
+                  <EraserIcon className="h-4 w-4 text-muted-foreground" />
+                </Button>
                 <div className="space-y-4">
                   {messages.map((message) => (
                     <div
@@ -298,8 +298,8 @@ const AdvancedAIChatbot = () => {
                     >
                       <div
                         className={`max-w-[85%] p-3 rounded-lg text-sm leading-relaxed ${message.sender === 'user'
-                            ? 'bg-primary text-primary-foreground'
-                            : 'bg-muted text-foreground border'
+                          ? 'bg-primary text-primary-foreground'
+                          : 'bg-muted text-foreground border'
                           }`}
                       >
                         {message.content}
