@@ -201,7 +201,7 @@ const AdvancedAIChatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed left-2 right-2 top-20 bottom-1 sm:left-auto sm:bottom-6 sm:right-6 z-50 sm:w-96 sm:h-[700px] sm:max-w-[calc(100vw-2rem)] sm:max-h-[calc(100vh-2rem)]">
+        <div className="fixed left-2 right-2 top-20 bottom-1 sm:left-auto sm:bottom-6 sm:top-0 sm:right-6 z-50 sm:w-96 sm:h-[700px] sm:max-w-[calc(100vw-2rem)] sm:max-h-[calc(100vh-2rem)]">
           <Card className="h-full flex flex-col shadow-2xl bg-gradient-to-b from-background to-background/95 border-2 border-primary/20">
             <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
               <div className="flex items-center justify-between">
