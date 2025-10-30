@@ -12,6 +12,8 @@ import { CartIcon } from "@/components/Cart";
 import { EnhancedSearchModal } from "@/components/EnhancedSearchModal";
 import { InstagramAccessBadge } from "@/components/InstagramAccessBadge";
 import { analytics } from "@/lib/analytics";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -180,9 +182,14 @@ const Navigation = () => {
               <span className="hidden lg:inline text-xs text-muted-foreground">⌘K</span>
             </Button>
             <InstagramAccessBadge compact />
-            <Link to="/login">
-              <Button variant="ghost">Login</Button>
-            </Link>
+            <SignedOut>
+              <Link to="/login">
+                <Button variant="ghost">Login</Button>
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
             <CartIcon />
           </div>
 

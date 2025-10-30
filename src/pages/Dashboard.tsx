@@ -9,11 +9,12 @@ import {
   User, LogOut, BookOpen, Brain, FileText, MapPin, Award,
   Clock, TrendingUp, CheckCircle2, AlertCircle
 } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+// import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ConditionalFooter from '@/components/ConditionalFooter';
+import { useClerk, useUser } from '@clerk/clerk-react';
 
 interface Profile {
   id: string;
@@ -30,6 +31,7 @@ interface UsageStats {
   ai_queries_today: number;
 }
 
+
 const Dashboard = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [usageStats, setUsageStats] = useState<UsageStats>({
@@ -41,53 +43,55 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const { signOut } = useClerk()
+  const { isLoaded, isSignedIn } = useUser()
+
   useEffect(() => {
     checkUser();
   }, []);
 
   const checkUser = async () => {
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      if (!isSignedIn) {
         navigate('/auth');
         return;
       }
 
       // Fetch user profile
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', session.user.id)
-        .single();
+      // const { data: profileData, error: profileError } = await supabase
+      //   .from('profiles')
+      //   .select('*')
+      //   .eq('user_id', session.user.id)
+      //   .single();
 
-      if (profileError) {
-        console.error('Profile error:', profileError);
-      } else {
-        setProfile(profileData);
-      }
+      // if (profileError) {
+      //   console.error('Profile error:', profileError);
+      // } else {
+      //   setProfile(profileData);
+      // }
 
       // Fetch usage stats
-      const today = new Date().toISOString().split('T')[0];
-      const weekStart = new Date();
-      weekStart.setDate(weekStart.getDate() - 7);
+      // const today = new Date().toISOString().split('T')[0];
+      // const weekStart = new Date();
+      // weekStart.setDate(weekStart.getDate() - 7);
 
-      const { data: usageData } = await supabase
-        .from('user_usage_tracking')
-        .select('feature, usage_count, reset_date')
-        .eq('user_id', session.user.id)
-        .gte('reset_date', weekStart.toISOString().split('T')[0]);
+      // const { data: usageData } = await supabase
+      //   .from('user_usage_tracking')
+      //   .select('feature, usage_count, reset_date')
+      //   .eq('user_id', session.user.id)
+      //   .gte('reset_date', weekStart.toISOString().split('T')[0]);
 
-      const stats = { mcqs_today: 0, pdfs_this_week: 0, ai_queries_today: 0 };
-      usageData?.forEach((usage) => {
-        if (usage.feature === 'mcq' && usage.reset_date === today) {
-          stats.mcqs_today = usage.usage_count;
-        } else if (usage.feature === 'pdf_download') {
-          stats.pdfs_this_week += usage.usage_count;
-        } else if (usage.feature === 'ai_search' && usage.reset_date === today) {
-          stats.ai_queries_today = usage.usage_count;
-        }
-      });
-      setUsageStats(stats);
+      // const stats = { mcqs_today: 0, pdfs_this_week: 0, ai_queries_today: 0 };
+      // usageData?.forEach((usage) => {
+      //   if (usage.feature === 'mcq' && usage.reset_date === today) {
+      //     stats.mcqs_today = usage.usage_count;
+      //   } else if (usage.feature === 'pdf_download') {
+      //     stats.pdfs_this_week += usage.usage_count;
+      //   } else if (usage.feature === 'ai_search' && usage.reset_date === today) {
+      //     stats.ai_queries_today = usage.usage_count;
+      //   }
+      // });
+      // setUsageStats(stats);
     } catch (error) {
       console.error('Dashboard error:', error);
     } finally {
@@ -96,15 +100,15 @@ const Dashboard = () => {
   };
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
+    try {
+      await signOut()
+      navigate('/');
+    } catch (error) {
       toast({
         title: "Error signing out",
         description: error.message,
         variant: "destructive"
       });
-    } else {
-      navigate('/');
     }
   };
 
@@ -119,7 +123,7 @@ const Dashboard = () => {
     }
   };
 
-  if (isLoading) {
+  if (!isLoaded) {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />

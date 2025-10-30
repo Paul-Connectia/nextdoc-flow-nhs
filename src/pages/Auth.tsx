@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, User, Mail, Lock } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
+import { useUser } from '@clerk/clerk-react';
+import { LoadingSpinner } from '@/components/LoadingSkeleton';
 
 const Auth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,16 +21,12 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const { isSignedIn, isLoaded } = useUser()
+
   useEffect(() => {
     // Check if user is already logged in
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        navigate('/dashboard');
-      }
-    };
-    checkUser();
-  }, [navigate]);
+    if (isSignedIn) navigate('/dashboard')
+  }, [isSignedIn, navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,32 +38,32 @@ const Auth = () => {
     setIsLoading(true);
     setError('');
 
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-            display_name: `${firstName} ${lastName}`
-          }
-        }
-      });
+    // try {
+    //   const { error } = await supabase.auth.signUp({
+    //     email,
+    //     password,
+    //     options: {
+    //       emailRedirectTo: `${window.location.origin}/dashboard`,
+    //       data: {
+    //         first_name: firstName,
+    //         last_name: lastName,
+    //         display_name: `${firstName} ${lastName}`
+    //       }
+    //     }
+    //   });
 
-      if (error) throw error;
+    //   if (error) throw error;
 
-      toast({
-        title: "Account created successfully!",
-        description: "Please check your email to verify your account.",
-      });
-    } catch (error) {
-      console.error('Sign up error:', error);
-      setError(error.message || 'Failed to create account');
-    } finally {
-      setIsLoading(false);
-    }
+    //   toast({
+    //     title: "Account created successfully!",
+    //     description: "Please check your email to verify your account.",
+    //   });
+    // } catch (error) {
+    //   console.error('Sign up error:', error);
+    //   setError(error.message || 'Failed to create account');
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -79,26 +76,33 @@ const Auth = () => {
     setIsLoading(true);
     setError('');
 
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password
-      });
+    // try {
+    //   const { error } = await supabase.auth.signInWithPassword({
+    //     email,
+    //     password
+    //   });
 
-      if (error) throw error;
+    //   if (error) throw error;
 
-      toast({
-        title: "Welcome back!",
-        description: "You have been signed in successfully.",
-      });
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Sign in error:', error);
-      setError(error.message || 'Failed to sign in');
-    } finally {
-      setIsLoading(false);
-    }
+    //   toast({
+    //     title: "Welcome back!",
+    //     description: "You have been signed in successfully.",
+    //   });
+    //   navigate('/dashboard');
+    // } catch (error) {
+    //   console.error('Sign in error:', error);
+    //   setError(error.message || 'Failed to sign in');
+    // } finally {
+    //   setIsLoading(false);
+    // }
   };
+  if (!isLoaded) {
+    return (
+      <div className='h-screen flex justify-center items-center'>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 flex items-center justify-center p-4">

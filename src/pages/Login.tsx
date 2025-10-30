@@ -5,10 +5,67 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { useSignIn } from "@clerk/clerk-react";
+import type { OAuthStrategy, SignInResource } from "@clerk/types";
+import { useUser } from "@clerk/clerk-react";
+
+type SupportedProviders = "google" | "facebook";
+const providerToStrategy: Record<SupportedProviders, OAuthStrategy> = {
+  google: "oauth_google",
+  facebook: "oauth_facebook",
+  // Add more strategies if needed
+};
+
+interface HandleSocialLoginProps {
+  signIn: SignInResource;
+  isLoaded: boolean;
+  setError: (error: string) => void;
+  provider: SupportedProviders;
+  redirectUrl?: string;
+}
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { signIn, setActive, isLoaded } = useSignIn();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!isLoaded) return;
+    setError("");
+    try {
+      const result = await signIn.create({ identifier: email, password });
+      await setActive({ session: result.createdSessionId });
+      // Redirect to your dashboard or use navigation here
+    } catch (err) {
+      setError(err?.errors?.[0]?.message || "Sign in failed. Check credentials.");
+      console.error("Clerk email/password sign-in error:", err);
+    }
+  };
+
+  const handleSocialLogin = async ({
+    signIn,
+    isLoaded,
+    setError,
+    provider,
+    redirectUrl = `${window.location.origin}/dashboard`,
+  }: HandleSocialLoginProps): Promise<void> => {
+    if (!isLoaded) return;
+    try {
+      const res = await signIn.authenticateWithRedirect({
+        strategy: providerToStrategy[provider],  //@ts-expect-error 
+        redirectUrl,
+      });
+      console.log(res)
+    } catch (err) {
+      setError(err?.errors?.[0]?.message || "Social sign in failed.");
+      console.error("Clerk social login error:", err);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -29,7 +86,7 @@ const Login = () => {
             <CardTitle>Sign In</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">
@@ -37,6 +94,8 @@ const Login = () => {
                   <Input
                     id="email"
                     type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     className="pl-10"
                   />
@@ -50,6 +109,8 @@ const Login = () => {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                     placeholder="Enter your password"
                     className="pl-10 pr-10"
                   />
@@ -76,9 +137,9 @@ const Login = () => {
                   Forgot password?
                 </Link>
               </div>
-            </div>
-
-            <Button className="w-full">Sign In</Button>
+              <Button className="w-full" type="submit">Sign In</Button>
+              {error && <div className="text-red-500 text-sm">{error}</div>}
+            </form>
 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -90,7 +151,12 @@ const Login = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline">
+              <Button onClick={() => handleSocialLogin({
+                signIn,
+                isLoaded,
+                setError,
+                provider: "google"
+              })} variant="outline">
                 <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -111,9 +177,14 @@ const Login = () => {
                 </svg>
                 Google
               </Button>
-              <Button variant="outline">
+              <Button onClick={() => handleSocialLogin({
+                signIn,
+                isLoaded,
+                setError,
+                provider: "facebook"
+              })} variant="outline">
                 <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                  <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z" />
                 </svg>
                 Facebook
               </Button>

@@ -15,7 +15,7 @@ export const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
     const checkAdminStatus = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
-        
+
         if (!session) {
           setIsAdmin(false);
           setIsLoading(false);
