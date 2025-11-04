@@ -57,6 +57,11 @@ import UnifiedConsentBanner from "@/components/UnifiedConsentBanner";
 import CheckoutSuccess from "./pages/CheckoutSuccess";
 import CheckoutCancel from "./pages/CheckoutCancel";
 import { InstagramVerificationFlow } from "@/components/InstagramVerificationFlow";
+import PhoneOtpSignIn from "./pages/PhoneOTPLogin";
+import PhoneOtpSignup from "./pages/PhoneOTPRegister";
+import ProtectedRoute from "./components/ProtectedRoutes";
+import ReRouter from "./components/ProtectedRoutes";
+import { SignUp } from "@clerk/clerk-react";
 
 const queryClient = new QueryClient();
 

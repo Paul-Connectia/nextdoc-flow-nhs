@@ -119,7 +119,11 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
           // Special handling for "Other UK Exams" - use Link instead of onClick
           if (pathway.id === "other-uk-exams") {
             return (
-              <Link key={pathway.id} to="/gapmap/other-uk-exams">
+              <Link key={pathway.id}
+                // 🕔 Forms functional only when GAPMAP is setup complete
+                to='/gapmap'
+              // to="/gapmap/other-uk-exams"
+              >
                 <Card
                   className={`cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br ${pathway.color} h-full`}
                 >
@@ -156,7 +160,8 @@ const PathwaySelector = ({ onSelect }: PathwaySelectorProps) => {
             <Card
               key={pathway.id}
               className={`cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br ${pathway.color}`}
-              onClick={() => onSelect(pathway.id)}
+            // 🕔 Forms functional only when GAPMAP is setup complete
+            // onClick={() => onSelect(pathway.id)}
             >
               <CardHeader>
                 <div className="flex justify-between items-start mb-2">

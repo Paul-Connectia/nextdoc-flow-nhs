@@ -21,7 +21,7 @@ const formSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(1, "Phone number is required"),
   address: z.string().optional(),
-  
+
   // Professional Credentials
   gmcNumber: z.string().min(1, "GMC number is required"),
   currentEmployer: z.string().min(1, "Current employer is required"),
@@ -33,31 +33,31 @@ const formSchema = z.object({
   qualifications: z.string().min(1, "Qualifications are required"),
   teachingRoles: z.string().optional(),
   mentorshipExperience: z.string().optional(),
-  
+
   // Mentor Expertise & Availability
   mentorshipAreas: z.array(z.string()).min(1, "Select at least one area"),
   languages: z.string().min(1, "Languages are required"),
   availability: z.string().min(1, "Availability is required"),
   preferredFormat: z.string().min(1, "Preferred format is required"),
-  
+
   // Mentorship Experience & Philosophy
   mentorshipApproach: z.string().min(1, "Mentorship approach is required"),
   successStories: z.string().optional(),
   challengingScenarios: z.string().min(1, "This field is required"),
-  
+
   // Compliance & Declarations
   gmcValid: z.boolean().refine((val) => val === true, "You must confirm valid GMC registration"),
   noInvestigations: z.boolean().refine((val) => val === true, "You must confirm no fitness to practise issues"),
   codeOfConduct: z.boolean().refine((val) => val === true, "You must agree to the code of conduct"),
   qualityReview: z.boolean().refine((val) => val === true, "You must consent to quality reviews"),
   gdprCompliance: z.boolean().refine((val) => val === true, "You must agree to GDPR policies"),
-  
+
   // Platform Usage & Payment Details
   paymentMethod: z.string().min(1, "Payment method is required"),
   taxInfo: z.string().optional(),
   cpdWillingness: z.string().min(1, "CPD willingness is required"),
   developmentAreas: z.string().optional(),
-  
+
   // Additional Information
   publicProfile: z.string().min(1, "Public profile preference is required"),
   specialtyMatching: z.string().min(1, "Specialty matching preference is required"),
@@ -128,7 +128,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   const handleMentorshipAreaChange = (area: string, checked: boolean) => {
-    const newAreas = checked 
+    const newAreas = checked
       ? [...selectedMentorshipAreas, area]
       : selectedMentorshipAreas.filter(a => a !== area);
     setSelectedMentorshipAreas(newAreas);
@@ -145,11 +145,11 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
           </CardDescription>
           <Progress value={progress} className="w-full" />
         </CardHeader>
-        
+
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              
+            <form onSubmit={form.handleSubmit(() => { f })} className="space-y-6">
+
               {/* Step 1: Personal Information */}
               {currentStep === 0 && (
                 <div className="space-y-4">
@@ -166,7 +166,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="preferredName"
@@ -180,7 +180,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="dateOfBirth"
@@ -194,7 +194,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="email"
@@ -208,7 +208,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="phone"
@@ -222,7 +222,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="address"
@@ -255,7 +255,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="currentEmployer"
@@ -269,7 +269,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="currentRole"
@@ -283,7 +283,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="specialty"
@@ -297,7 +297,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="subspecialty"
@@ -311,7 +311,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="clinicalExperience"
@@ -325,7 +325,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="nhsExperience"
@@ -339,7 +339,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="qualifications"
@@ -353,7 +353,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="teachingRoles"
@@ -367,7 +367,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="mentorshipExperience"
@@ -411,7 +411,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="languages"
@@ -425,7 +425,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="availability"
@@ -439,7 +439,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="preferredFormat"
@@ -482,7 +482,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="successStories"
@@ -496,7 +496,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="challengingScenarios"
@@ -534,7 +534,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="noInvestigations"
@@ -553,7 +553,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="codeOfConduct"
@@ -572,7 +572,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="qualityReview"
@@ -591,7 +591,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="gdprCompliance"
@@ -639,7 +639,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="taxInfo"
@@ -653,7 +653,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="cpdWillingness"
@@ -676,7 +676,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="developmentAreas"
@@ -718,7 +718,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="specialtyMatching"
@@ -741,7 +741,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="additionalNotes"
@@ -764,7 +764,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                   <div className="text-center space-y-4">
                     <h3 className="text-lg font-semibold">Document Upload</h3>
                     <p className="text-muted-foreground">Please prepare the following documents for upload:</p>
-                    
+
                     <div className="grid gap-4 text-left">
                       <div className="border rounded-lg p-4">
                         <h4 className="font-medium mb-2">Required Documents:</h4>
@@ -773,7 +773,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                           <li>Proof of Specialty Qualifications (if available)</li>
                         </ul>
                       </div>
-                      
+
                       <div className="border rounded-lg p-4">
                         <h4 className="font-medium mb-2">Optional Documents:</h4>
                         <ul className="list-disc list-inside space-y-1 text-sm">
@@ -782,7 +782,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                         </ul>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center justify-center w-full">
                       <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -810,7 +810,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                   <ChevronLeft className="w-4 h-4" />
                   {currentStep === 0 ? "Cancel" : "Previous"}
                 </Button>
-                
+
                 {currentStep < steps.length - 1 ? (
                   <Button
                     type="button"

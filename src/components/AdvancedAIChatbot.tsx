@@ -5,10 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useInstagramAccess } from "@/hooks/useInstagramAccess";
-import { InstagramGateModal } from "@/components/InstagramGateModal";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import Markdown from 'markdown-to-jsx'
+// import { useInstagramAccess } from "@/hooks/useInstagramAccess";
+// import { InstagramGateModal } from "@/components/InstagramGateModal";
 
 interface Message {
   id: string;
@@ -34,6 +35,7 @@ const specialtyModes: SpecialtyMode[] = [
 
 const AdvancedAIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isSignedIn, isLoaded, userId } = useAuth()
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -50,7 +52,7 @@ const AdvancedAIChatbot = () => {
   const [gateModalOpen, setGateModalOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const { canAccess, remainingUses, trackUsage, openVerificationModal, isPaidUser } = useInstagramAccess();
+  // const { canAccess, remainingUses, trackUsage, openVerificationModal, isPaidUser } = useInstagramAccess();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -79,18 +81,19 @@ const AdvancedAIChatbot = () => {
     const text = (overrideText ?? inputValue).trim();
     if (!text || isLoading) return;
 
+
     // Check access for non-paid users
-    if (!isPaidUser && !canAccess('chat')) {
-      const limitMessage: Message = {
-        id: Date.now().toString(),
-        content: `You've reached your daily limit (10 messages). Follow @nextdoc_uk on Instagram for 10 free queries/day, or upgrade to Pro for unlimited access.`,
-        sender: 'bot',
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, limitMessage]);
-      openVerificationModal('NextDoc AI Chat');
-      return;
-    }
+    // if (!isPaidUser && !canAccess('chat')) {
+    //   const limitMessage: Message = {
+    //     id: Date.now().toString(),
+    //     content: `You've reached your daily limit (10 messages). Follow @nextdoc_uk on Instagram for 10 free queries/day, or upgrade to Pro for unlimited access.`,
+    //     sender: 'bot',
+    //     timestamp: new Date()
+    //   };
+    //   setMessages(prev => [...prev, limitMessage]);
+    //   openVerificationModal('NextDoc AI Chat');
+    //   return;
+    // }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -102,9 +105,9 @@ const AdvancedAIChatbot = () => {
     setMessages(prev => [...prev, userMessage]);
 
     // Track usage for Instagram-verified users
-    if (!isPaidUser) {
-      await trackUsage('chat');
-    }
+    // if (!isPaidUser) {
+    //   await trackUsage('chat');
+    // }
 
     // Clear input only when using the input field
     if (!overrideText) setInputValue("");
@@ -112,28 +115,54 @@ const AdvancedAIChatbot = () => {
     setIsLoading(true);
 
     try {
-      const { data: session } = await supabase.auth.getSession();
-      const userId = session?.session?.user?.id;
+      // const { data: session } = await supabase.auth.getSession();
+      // const userId = session?.session?.user?.id;
 
-      const { data, error } = await supabase.functions.invoke('nextdoc-ai-chat', {
-        body: {
+      // const { data, error } = await supabase.functions.invoke('nextdoc-ai-chat', {
+      //   body: {
+      //     message: text,
+      //     userId,
+      //     conversationId,
+      //     specialty: selectedSpecialty
+      //   }
+      // });
+
+      // if (error) throw error
+
+      // if (isLoaded && !isSignedIn) {
+      //   toast({
+      //     title: "Login required",
+      //     description: "Please login to continue with this feature",
+      //     variant: "destructive",
+      //   });
+      //   return
+      // }
+
+      // if (isLoaded && isSignedIn) {
+
+      const data = await fetch(`${import.meta.env.VITE_API_BASE_URL}/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           message: text,
           userId,
           conversationId,
-          specialty: selectedSpecialty
-        }
-      });
+        }),
+      })
 
-      if (error) throw error;
+      const apiRes = await data.json()
+      console.log(apiRes)
 
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.response,
+        content: apiRes.data.response,
         sender: 'bot',
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, botResponse]);
+
+      // }
 
     } catch (error: any) {
       console.error('AI chat error:', error);
@@ -190,7 +219,18 @@ const AdvancedAIChatbot = () => {
       <div className="fixed bottom-6 right-6 z-50">
         {!isOpen && (
           <Button
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              if (isLoaded && isSignedIn) {
+                setIsOpen(true)
+              }
+              if (isLoaded && !isSignedIn) {
+                toast({
+                  title: "Login required",
+                  description: "Please login to use our advanced AI ChatBot feature",
+                  variant: "destructive",
+                });
+              }
+            }}
             className="w-16 h-16 rounded-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-white/20"
             size="icon"
           >
@@ -201,22 +241,22 @@ const AdvancedAIChatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed left-2 right-2 bottom-2 h-[calc(100svh-120px)] sm:left-auto sm:bottom-6 sm:top-0 sm:right-6 z-50 sm:w-96 sm:h-[700px] sm:max-w-[calc(100vw-2rem)] sm:max-h-[calc(100vh-2rem)]">
+        <div className="fixed left-2 right-2 bottom-2 h-[calc(100svh-60px)] sm:left-auto sm:bottom-6 sm:top-0 sm:right-6 z-50 sm:w-96 sm:h-[700px] sm:max-w-[calc(100vw-2rem)] sm:max-h-[calc(100vh-2rem)]">
           <Card className="h-full flex flex-col shadow-2xl bg-gradient-to-b from-background to-background/95 border-2 border-primary/20">
-            <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg">
+            <CardHeader className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-t-lg border-2">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2 flex-1">
                   <IconComponent className="h-5 w-5" />
                   <div>
-                    <CardTitle className="text-lg">NextDoc UK AI — NHS Career Assistant</CardTitle>
+                    <CardTitle className="text-sm">NextDoc UK AI — NHS Career Assistant</CardTitle>
                     <p className="text-xs text-primary-foreground/80">{selectedMode.description}</p>
                   </div>
                 </div>
-                {!isPaidUser && canAccess('chat') && (
+                {/* {!isPaidUser && canAccess('chat') && (
                   <Badge variant="secondary" className="text-xs">
                     {remainingUses('chat')}/10 left
                   </Badge>
-                )}
+                )} */}
                 <div className="flex items-center space-x-2">
                   <Button
                     variant="ghost"
@@ -230,9 +270,9 @@ const AdvancedAIChatbot = () => {
               </div>
             </CardHeader>
 
-            <CardContent className="flex-1 flex flex-col p-0">
+            <CardContent className="flex-1 flex flex-col p-0 overflow-y-scroll">
               {/* Disclaimer Box */}
-              <div className="p-3 border-b bg-amber-50/50">
+              <div className="p-1 px-3 border-b bg-amber-50/50">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
@@ -247,7 +287,7 @@ const AdvancedAIChatbot = () => {
                     {showDisclaimer ? 'Hide' : 'Info'}
                   </Button>
                 </div>
-                {showDisclaimer && (
+                {/* {showDisclaimer && (
                   <div className="mt-2 text-xs text-amber-600 leading-relaxed">
                     This assistant is for educational and career guidance only. It does not provide medical or visa advice. For personalised support, book a consultation with our NHS mentors.
                     {!isPaidUser && (
@@ -256,11 +296,11 @@ const AdvancedAIChatbot = () => {
                       </div>
                     )}
                   </div>
-                )}
+                )} */}
               </div>
 
               {/* Specialty Mode Selector */}
-              <div className="p-3 border-b bg-muted/30">
+              {/* <div className="p-3 border-b bg-muted/30">
                 <div className="flex flex-wrap gap-1">
                   {specialtyModes.map((mode) => {
                     const ModeIcon = mode.icon;
@@ -278,7 +318,7 @@ const AdvancedAIChatbot = () => {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
 
               <ScrollArea className="flex-1 p-4 relative">
                 <Button
@@ -302,18 +342,18 @@ const AdvancedAIChatbot = () => {
                           : 'bg-muted text-foreground border'
                           }`}
                       >
-                        {message.content}
+                        {message.sender === 'bot' ? <Markdown>{message.content}</Markdown> : message.content}
                         {message.sender === 'bot' && (
                           <div className="flex items-center mt-2 text-xs text-muted-foreground">
                             <Badge variant="outline" className="text-xs px-1 py-0">
-                              {selectedMode.name} AI
+                              NextDoc AI
                             </Badge>
                           </div>
                         )}
                       </div>
                     </div>
                   ))}
-                  {isLoading && (
+                  {(isLoading || !isLoaded) && (
                     <div className="flex justify-start">
                       <div className="bg-muted border rounded-lg p-3 max-w-[85%]">
                         <div className="flex items-center space-x-2">
@@ -359,12 +399,12 @@ const AdvancedAIChatbot = () => {
         </div>
       )}
 
-      <InstagramGateModal
+      {/* <InstagramGateModal
         isOpen={gateModalOpen}
         onClose={() => setGateModalOpen(false)}
         featureName="NextDoc AI Chat"
         onVerificationSuccess={() => setGateModalOpen(false)}
-      />
+      /> */}
     </>
   );
 };

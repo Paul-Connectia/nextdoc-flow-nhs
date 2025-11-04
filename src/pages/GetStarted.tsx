@@ -9,10 +9,20 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { CheckCircle, ArrowRight, Mail, Phone, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUser, useSignIn } from "@clerk/clerk-react";
+import { LoadingSpinner } from "@/components/LoadingSkeleton";
 
 const GetStarted = () => {
   const [consultDialogOpen, setConsultDialogOpen] = useState(false);
+
+  const { isSignedIn } = useUser()
+  const { isLoaded } = useSignIn()
+  const navigate = useNavigate()
+
+  if (isLoaded && isSignedIn) {
+    navigate('/')
+  }
 
   const steps = [
     {
@@ -47,7 +57,7 @@ const GetStarted = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    !isLoaded ? <LoadingSpinner /> : <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

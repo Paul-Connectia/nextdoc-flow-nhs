@@ -1,74 +1,239 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Separator } from "@/components/ui/separator";
+// import { Link, useNavigate } from "react-router-dom";
+// import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+// import { FormEvent, useState } from "react";
+// import { useSignIn, useUser } from "@clerk/clerk-react";
+// import type { OAuthStrategy, SignInResource } from "@clerk/types";
+// import { LoadingSpinner } from "@/components/LoadingSkeleton";
+
+import { SignIn, useUser } from "@clerk/clerk-react";
+import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { FormEvent, useState } from "react";
-import { useSignIn } from "@clerk/clerk-react";
-import type { OAuthStrategy, SignInResource } from "@clerk/types";
-import { useUser } from "@clerk/clerk-react";
 
-type SupportedProviders = "google" | "facebook";
-const providerToStrategy: Record<SupportedProviders, OAuthStrategy> = {
-  google: "oauth_google",
-  facebook: "oauth_facebook",
-  // Add more strategies if needed
-};
+// import { SignIn } from "@clerk/clerk-react";
 
-interface HandleSocialLoginProps {
-  signIn: SignInResource;
-  isLoaded: boolean;
-  setError: (error: string) => void;
-  provider: SupportedProviders;
-  redirectUrl?: string;
-}
+// type SupportedProviders = "google" | "facebook";
+// const providerToStrategy: Record<SupportedProviders, OAuthStrategy> = {
+//   google: "oauth_google",
+//   facebook: "oauth_facebook",
+//   //   // Add more strategies if needed
+// };
 
+// interface HandleSocialLoginProps {
+//   signIn: SignInResource;
+//   isLoaded: boolean;
+//   setError: (error: string) => void;
+//   provider: SupportedProviders;
+//   redirectUrl?: string;
+// }
 
-const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const { signIn, setActive, isLoaded } = useSignIn();
+// const Login = () => {
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+//   const { signIn, setActive, isLoaded } = useSignIn();
+//   const { isSignedIn } = useUser()
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!isLoaded) return;
-    setError("");
-    try {
-      const result = await signIn.create({ identifier: email, password });
-      await setActive({ session: result.createdSessionId });
-      // Redirect to your dashboard or use navigation here
-    } catch (err) {
-      setError(err?.errors?.[0]?.message || "Sign in failed. Check credentials.");
-      console.error("Clerk email/password sign-in error:", err);
-    }
-  };
+//   const navigate = useNavigate()
 
-  const handleSocialLogin = async ({
-    signIn,
-    isLoaded,
-    setError,
-    provider,
-    redirectUrl = `${window.location.origin}/dashboard`,
-  }: HandleSocialLoginProps): Promise<void> => {
-    if (!isLoaded) return;
-    try {
-      const res = await signIn.authenticateWithRedirect({
-        strategy: providerToStrategy[provider],  //@ts-expect-error 
-        redirectUrl,
-      });
-      console.log(res)
-    } catch (err) {
-      setError(err?.errors?.[0]?.message || "Social sign in failed.");
-      console.error("Clerk social login error:", err);
-    }
-  };
+//   if (isLoaded && isSignedIn) {
+//     navigate('/')
+//   }
 
+//   const handleSubmit = async (e: FormEvent) => {
+//     e.preventDefault();
+//     if (!isLoaded) return;
+//     setError("");
+//     try {
+//       const result = await signIn.create({ identifier: email, password });
+//       await setActive({ session: result.createdSessionId });
+//       // Redirect to your dashboard or use navigation here
+//     } catch (err) {
+//       setError(err?.errors?.[0]?.message || "Sign in failed. Check credentials.");
+//       console.error("Clerk email/password sign-in error:", err);
+//     }
+//   };
+
+//   const handleSocialLogin = async ({
+//     signIn,
+//     isLoaded,
+//     setError,
+//     provider,
+//     redirectUrl = `${window.location.origin}/dashboard`,
+//   }: HandleSocialLoginProps): Promise<void> => {
+//     // if (!isLoaded) return;
+//     try {
+//       const res = await signIn.authenticateWithRedirect({
+//         strategy: providerToStrategy[provider],
+//         redirectUrl,
+//       });
+//       console.log('executed')
+//       console.log(res)
+//     } catch (err) {
+//       setError(err?.errors?.[0]?.message || "Social sign in failed.");
+//       console.error("Clerk social login error:", err);
+//     }
+//   };
+
+//   return (
+//     !isLoaded ? <LoadingSpinner /> : <div className="min-h-screen bg-background flex items-center justify-center p-4">
+//       <div className="w-full max-w-md">
+//         <div className="text-center mb-8">
+//           <Link to="/" className="inline-flex items-center space-x-2 mb-6">
+//             <div className="w-10 h-10 bg-primary rounded-md flex items-center justify-center">
+//               <span className="text-primary-foreground font-bold">ND</span>
+//             </div>
+//             <span className="text-2xl font-bold text-primary">NextDoc UK</span>
+//           </Link>
+//           <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
+//           <p className="text-muted-foreground">Sign in to continue your NHS journey</p>
+//         </div>
+
+//         <Card>
+//           <CardHeader>
+//             <CardTitle>Sign In</CardTitle>
+//           </CardHeader>
+//           <CardContent className="space-y-6">
+//             <form onSubmit={handleSubmit} className="space-y-4">
+//               <div className="space-y-2">
+//                 <Label htmlFor="email">Email</Label>
+//                 <div className="relative">
+//                   <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                   <Input
+//                     id="email"
+//                     type="email"
+//                     value={email}
+//                     onChange={e => setEmail(e.target.value)}
+//                     placeholder="Enter your email"
+//                     className="pl-10"
+//                   />
+//                 </div>
+//               </div>
+
+//               <div className="space-y-2">
+//                 <Label htmlFor="password">Password</Label>
+//                 <div className="relative">
+//                   <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+//                   <Input
+//                     id="password"
+//                     type={showPassword ? "text" : "password"}
+//                     value={password}
+//                     onChange={e => setPassword(e.target.value)}
+//                     placeholder="Enter your password"
+//                     className="pl-10 pr-10"
+//                   />
+//                   <button
+//                     type="button"
+//                     onClick={() => setShowPassword(!showPassword)}
+//                     className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+//                   >
+//                     {showPassword ? (
+//                       <EyeOff className="h-4 w-4" />
+//                     ) : (
+//                       <Eye className="h-4 w-4" />
+//                     )}
+//                   </button>
+//                 </div>
+//               </div>
+
+//               <div className="flex items-center justify-between">
+//                 <label className="flex items-center space-x-2">
+//                   <input type="checkbox" className="rounded border-border" />
+//                   <span className="text-sm text-muted-foreground">Remember me</span>
+//                 </label>
+//                 <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+//                   Forgot password?
+//                 </Link>
+//               </div>
+//               <Button className="w-full" type="submit">Sign In</Button>
+//               {error && <div className="text-red-500 text-sm">{error}</div>}
+//             </form>
+
+//             <div className="relative">
+//               <div className="absolute inset-0 flex items-center">
+//                 <Separator />
+//               </div>
+//               <div className="relative flex justify-center text-xs uppercase">
+//                 <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+//               </div>
+//             </div>
+
+//             <div className="grid grid-cols-2 gap-4">
+//               <Link className="col-span-2" to={'/phone-otp-login'}>
+//                 <Button className="w-full" variant="outline" >Sign In with Phone</Button>
+//               </Link>
+//               <Button onClick={() => handleSocialLogin({
+//                 signIn,
+//                 isLoaded,
+//                 setError,
+//                 provider: "google"
+//               })} variant="outline">
+//                 <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
+//                   <path
+//                     fill="currentColor"
+//                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+//                   />
+//                   <path
+//                     fill="currentColor"
+//                     d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+//                   />
+//                   <path
+//                     fill="currentColor"
+//                     d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+//                   />
+//                   <path
+//                     fill="currentColor"
+//                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+//                   />
+//                 </svg>
+//                 Google
+//               </Button>
+//               <Button onClick={() => handleSocialLogin({
+//                 signIn,
+//                 isLoaded,
+//                 setError,
+//                 provider: "facebook"
+//               })} variant="outline">
+//                 <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+//                   <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z" />
+//                 </svg>
+//                 Facebook
+//               </Button>
+//             </div>
+
+//             <div className="text-center text-sm">
+//               <span className="text-muted-foreground">Don't have an account? </span>
+//               <Link to="/get-started" className="text-primary hover:underline">
+//                 Sign up
+//               </Link>
+//             </div>
+//           </CardContent>
+//         </Card>
+
+//         <div className="mt-8 text-center">
+//           <p className="text-xs text-muted-foreground">
+//             By signing in, you agree to our{" "}
+//             <Link to="/terms" className="hover:underline">Terms of Service</Link>{" "}
+//             and{" "}
+//             <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;
+
+export default function Login() {
+  const { isLoaded } = useUser();
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="flex justify-center items-center py-4 h-screen">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center space-x-2 mb-6">
@@ -77,139 +242,45 @@ const Login = () => {
             </div>
             <span className="text-2xl font-bold text-primary">NextDoc UK</span>
           </Link>
-          <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
-          <p className="text-muted-foreground">Sign in to continue your NHS journey</p>
+          {/* <h1 className="text-2xl font-bold mb-2">Welcome Back</h1>
+        <p className="text-muted-foreground">Sign in to continue your NHS journey</p> */}
         </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign In</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    placeholder="Enter your password"
-                    className="pl-10 pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="rounded border-border" />
-                  <span className="text-sm text-muted-foreground">Remember me</span>
-                </label>
-                <Link to="/forgot-password" className="text-sm text-primary hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
-              <Button className="w-full" type="submit">Sign In</Button>
-              {error && <div className="text-red-500 text-sm">{error}</div>}
-            </form>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <Separator />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <Button onClick={() => handleSocialLogin({
-                signIn,
-                isLoaded,
-                setError,
-                provider: "google"
-              })} variant="outline">
-                <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                  />
-                </svg>
-                Google
-              </Button>
-              <Button onClick={() => handleSocialLogin({
-                signIn,
-                isLoaded,
-                setError,
-                provider: "facebook"
-              })} variant="outline">
-                <svg className="h-4 w-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z" />
-                </svg>
-                Facebook
-              </Button>
-            </div>
-
-            <div className="text-center text-sm">
-              <span className="text-muted-foreground">Don't have an account? </span>
-              <Link to="/get-started" className="text-primary hover:underline">
-                Sign up
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-
+        <div className="flex justify-center items-center">
+          {isLoaded ? (
+            <SignIn
+              signUpUrl="/get-started"
+              fallbackRedirectUrl="/dashboard"
+              appearance={{
+                elements: {
+                  formButtonPrimary: "bg-primary",
+                  footerAction: { display: "none" },
+                  socialButtons: "text-black",
+                },
+                variables: { fontSize: "14px" },
+                layout: {
+                  socialButtonsVariant: "blockButton",
+                  socialButtonsPlacement: "bottom",
+                  logoLinkUrl: "/",
+                },
+              }}
+            />
+          ) : (
+            <Loader2 className="animate-spin" />
+          )}
+        </div>
         <div className="mt-8 text-center">
           <p className="text-xs text-muted-foreground">
             By signing in, you agree to our{" "}
-            <Link to="/terms" className="hover:underline">Terms of Service</Link>{" "}
+            <Link to="/terms" className="hover:underline">
+              Terms of Service
+            </Link>{" "}
             and{" "}
-            <Link to="/privacy" className="hover:underline">Privacy Policy</Link>
+            <Link to="/privacy" className="hover:underline">
+              Privacy Policy
+            </Link>
           </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default Login;
+}

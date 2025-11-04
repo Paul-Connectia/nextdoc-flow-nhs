@@ -13,7 +13,6 @@ import { EnhancedSearchModal } from "@/components/EnhancedSearchModal";
 import { InstagramAccessBadge } from "@/components/InstagramAccessBadge";
 import { analytics } from "@/lib/analytics";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
-import { useUser } from "@clerk/clerk-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
