@@ -46,7 +46,7 @@ const SponsorMatch = () => {
         {
           id: 2,
           trustName: "Imperial College Healthcare NHS Trust",
-          location: "London", 
+          location: "London",
           specialty: "Emergency Medicine",
           role: "SHO",
           fitScore: 88,
@@ -98,14 +98,14 @@ const SponsorMatch = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
           <Link to="/products" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Products
           </Link>
-          
+
           <div className="flex items-center gap-3 mb-2">
             <Building className="h-8 w-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-foreground">SponsorMatch™</h1>
@@ -116,7 +116,7 @@ const SponsorMatch = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        {/* <div className="max-w-6xl mx-auto">
           {currentStep === "intake" && (
             <SponsorshipIntake onComplete={handleIntakeComplete} />
           )}
@@ -128,9 +128,9 @@ const SponsorMatch = () => {
               onBack={() => setCurrentStep("intake")}
             />
           )}
-        </div>
+        </div> */}
       </div>
-      
+
       <ConditionalFooter />
     </div>
   );

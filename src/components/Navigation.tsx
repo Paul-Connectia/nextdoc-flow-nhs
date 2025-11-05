@@ -12,11 +12,13 @@ import { CartIcon } from "@/components/Cart";
 import { EnhancedSearchModal } from "@/components/EnhancedSearchModal";
 import { InstagramAccessBadge } from "@/components/InstagramAccessBadge";
 import { analytics } from "@/lib/analytics";
-import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/clerk-react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const { user } = useUser()
 
   // Keyboard shortcut for search (Cmd/Ctrl + K)
   useEffect(() => {
@@ -221,18 +223,26 @@ const Navigation = () => {
           <div className="md:hidden fixed inset-x-0 top-[64px] bottom-0 bg-background border-t border-border z-40 overflow-y-auto">
             <div className="px-4 py-4 pb-safe">
               {/* Login & Get Started - Priority at top */}
-              <div className="flex flex-col space-y-2 mb-4 pb-4 border-b border-border">
-                <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="default" className="w-full justify-center">
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/get-started" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full justify-center">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
+              <SignedOut>
+                <div className="flex flex-col space-y-2 mb-4 pb-4 border-b border-border">
+                  <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="default" className="w-full justify-center">
+                      Login/Register
+                    </Button>
+                  </Link>
+                  {/* <Link to="/get-started" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full justify-center">
+                      Get Started
+                    </Button>
+                  </Link> */}
+                </div>
+              </SignedOut>
+              <SignedIn>
+                <div className="flex justify-between mb-2">
+                  <p className="text-primary font-semibold">Hello, {user.firstName}</p>
+                  <UserButton />
+                </div>
+              </SignedIn>
 
               {/* Main Navigation */}
               <div className="flex flex-col space-y-2">

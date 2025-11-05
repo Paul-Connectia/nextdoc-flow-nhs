@@ -18,12 +18,12 @@ const CVBooster = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [cvData, setCvData] = useState({});
   const [showPreview, setShowPreview] = useState(false);
-  
+
   // NEW: Pathway/Template/Keywords state
   const [pathway, setPathway] = useState<string>("");
   const [templateId, setTemplateId] = useState<string>("");
   const [keywords, setKeywords] = useState<string[]>([]);
-  
+
   // Evidence state
   const [evidenceEnabled, setEvidenceEnabled] = useState(false);
   const [evidenceJobId, setEvidenceJobId] = useState<string | null>(null);
@@ -98,7 +98,7 @@ const CVBooster = () => {
 
   const handleFormComplete = async (data: any) => {
     setCvData(data);
-    
+
     // Mock intake submission (backend integration later)
     console.log("CV Intake Payload:", {
       pathway,
@@ -106,11 +106,11 @@ const CVBooster = () => {
       keywords,
       formData: data
     });
-    
+
     const mockIntakeId = `intake-${Date.now()}`;
     setIntakeId(mockIntakeId);
     toast.success("CV data saved successfully!");
-    
+
     setCurrentStep("review");
   };
 
@@ -132,28 +132,28 @@ const CVBooster = () => {
   // Evidence polling effect
   useEffect(() => {
     if (!evidenceEnabled || !cvData || evidenceStatus !== "idle") return;
-    
+
     // Mock: Start evidence job
     const mockJobId = `job-${Date.now()}`;
     setEvidenceJobId(mockJobId);
     setEvidenceStatus("processing");
-    
+
     // Mock: Simulate processing -> complete after 5 seconds
     setTimeout(() => {
       setEvidenceStatus("complete");
       setEvidenceItems([
-        { 
-          title: "NICE Guideline NG28: Type 2 diabetes in adults", 
+        {
+          title: "NICE Guideline NG28: Type 2 diabetes in adults",
           url: "https://www.nice.org.uk/guidance/ng28",
           note: "Referenced in clinical experience section"
         },
-        { 
-          title: "NHS England: Clinical Leadership Competency Framework", 
+        {
+          title: "NHS England: Clinical Leadership Competency Framework",
           url: "https://www.leadershipacademy.nhs.uk/resources/",
           note: "Supports leadership claims"
         },
-        { 
-          title: "Royal College of Physicians: Acute Care Toolkit", 
+        {
+          title: "Royal College of Physicians: Acute Care Toolkit",
           url: "https://www.rcplondon.ac.uk/projects/acute-care-toolkit",
           note: "Validates acute medicine experience"
         }
@@ -167,13 +167,13 @@ const CVBooster = () => {
         <h2 className="text-3xl font-bold text-foreground mb-4">Choose Your NHS Pathway</h2>
         <p className="text-muted-foreground text-lg">Select the pathway that best matches your career stage and goals</p>
       </div>
-      
+
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {pathways.map((pathway) => (
-          <Card 
+          <Card
             key={pathway.id}
             className="cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1"
-            onClick={() => handlePathwaySelect(pathway.id)}
+          // onClick={() => handlePathwaySelect(pathway.id)}
           >
             <CardHeader>
               <div className="flex justify-between items-start mb-2">
@@ -224,7 +224,7 @@ const CVBooster = () => {
                 <p className="text-sm text-muted-foreground">Your CV meets NHS standards</p>
               </div>
             </div>
-            
+
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h4 className="font-semibold text-green-600 mb-2 flex items-center gap-1">
@@ -237,7 +237,7 @@ const CVBooster = () => {
                   ))}
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold text-orange-600 mb-2 flex items-center gap-1">
                   <AlertCircle className="h-4 w-4" />
@@ -272,7 +272,7 @@ const CVBooster = () => {
                 </p>
               </div>
             </div>
-            
+
             {evidenceJobId && (
               <Badge variant={evidenceStatus === "complete" ? "default" : "secondary"}>
                 {evidenceStatus === "processing" && "Processing..."}
@@ -280,7 +280,7 @@ const CVBooster = () => {
               </Badge>
             )}
           </div>
-          
+
           {evidenceEnabled && evidenceStatus === "complete" && evidenceItems.length > 0 && (
             <div className="mt-4 space-y-2">
               <h4 className="font-semibold text-sm">Evidence Items:</h4>
@@ -312,9 +312,9 @@ const CVBooster = () => {
           <Download className="h-4 w-4" />
           Download DOCX
         </Button>
-        
+
         {evidenceEnabled && evidenceStatus === "complete" && (
-          <Button 
+          <Button
             variant="secondary"
             onClick={handleSaveVersion}
             className="flex items-center gap-2"
@@ -330,14 +330,14 @@ const CVBooster = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
           <Link to="/products" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Products
           </Link>
-          
+
           <div className="flex items-center gap-3 mb-2">
             <FileText className="h-8 w-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-foreground">CV Booster™</h1>
@@ -350,17 +350,17 @@ const CVBooster = () => {
 
         <div className="max-w-6xl mx-auto">
           {currentStep === "pathway" && renderPathwaySelection()}
-          
+
           {currentStep === "template" && (
-            <TemplateSelector 
+            <TemplateSelector
               pathway={selectedPathway}
               onTemplateSelect={handleTemplateSelect}
               onBack={() => setCurrentStep("pathway")}
             />
           )}
-          
+
           {currentStep === "form" && (
-            <CVFormWizard 
+            <CVFormWizard
               pathway={selectedPathway}
               template={selectedTemplate}
               pathwayId={pathway}
@@ -371,11 +371,11 @@ const CVBooster = () => {
               onBack={() => setCurrentStep("template")}
             />
           )}
-          
+
           {currentStep === "review" && renderAIReview()}
         </div>
       </div>
-      
+
       <ConditionalFooter />
     </div>
   );

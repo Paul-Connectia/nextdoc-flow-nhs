@@ -13,6 +13,8 @@ import { useState, useMemo, useCallback } from "react";
 import { Mentor, MentorFilters } from "@/types/mentor";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useUser } from "@clerk/clerk-react";
+import { toast } from "sonner";
 
 const Mentors = () => {
   const [showOnboardingForm, setShowOnboardingForm] = useState(false);
@@ -25,6 +27,9 @@ const Mentors = () => {
     badgeLevels: [],
     availability: 'all'
   });
+
+  //auth user
+  const { user, isLoaded } = useUser()
 
   const mentors: Mentor[] = [
     {
@@ -278,7 +283,14 @@ const Mentors = () => {
                   size="lg"
                   variant="secondary"
                   className="w-full h-12"
-                  onClick={() => setShowOnboardingForm(true)}
+                  onClick={() => {
+                    if (isLoaded && user) {
+                      setShowOnboardingForm(true)
+                    } else {
+                      toast.error("Please login to continue...")
+                    }
+                  }
+                  }
                 >
                   Become a Mentor
                 </Button>

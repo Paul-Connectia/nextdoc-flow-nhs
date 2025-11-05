@@ -148,12 +148,12 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
 
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(() => { f })} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
               {/* Step 1: Personal Information */}
               {currentStep === 0 && (
                 <div className="space-y-4">
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="fullName"
                     render={({ field }) => (
@@ -165,7 +165,7 @@ export const MentorOnboardingForm: React.FC<MentorOnboardingFormProps> = ({ onCl
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
 
                   <FormField
                     control={form.control}

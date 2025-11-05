@@ -30,18 +30,18 @@ const InterviewSim = () => {
     setInterviewConfig(data);
     setIsLoadingSession(true);
     setValidationError(null);
-    
+
     try {
       toast.info("Starting your interview session...");
       const newSession = await startInterviewSession(payload);
-      
+
       // Validate returned questions match expected specialty/role
       const validation = validateQuestions(
         newSession.questions,
         config.specialty,
         config.roleLevel
       );
-      
+
       if (!validation.valid) {
         setValidationError(validation.errors.join("; "));
         toast.error("Question validation failed", {
@@ -50,14 +50,14 @@ const InterviewSim = () => {
         console.error("❌ Validation Errors:", validation.errors);
         return; // Don't proceed
       }
-      
+
       console.log("✅ Session started successfully:", newSession.sessionId);
       console.log("✅ Questions validated:", newSession.questions.length, "specialty-specific questions loaded");
-      
+
       setSession(newSession);
       setCurrentStep("interview");
       toast.success("Interview session ready!");
-      
+
     } catch (error) {
       console.error("Failed to start interview:", error);
       toast.error("Failed to start interview", {
@@ -71,19 +71,19 @@ const InterviewSim = () => {
   const handleSessionComplete = async (data: any) => {
     setSessionData(data);
     setCurrentStep("results");
-    
+
     if (!session) {
       console.error("No session found");
       return;
     }
-    
+
     // Submit answers to API
     const answers: InterviewAnswer[] = data.answers.map((text: string, idx: number) => ({
       questionId: session.questions[idx].id,
       text,
       audioUrl: undefined
     }));
-    
+
     try {
       await submitAnswers(session.sessionId, answers);
       console.log("✅ Answers submitted successfully");
@@ -91,7 +91,7 @@ const InterviewSim = () => {
       console.error("Failed to submit answers:", error);
       toast.error("Failed to save answers");
     }
-    
+
     // Fetch AI review
     setIsLoadingReview(true);
     try {
@@ -119,7 +119,7 @@ const InterviewSim = () => {
     ],
     strengths: [
       "Clear communication style",
-      "Good understanding of NHS values", 
+      "Good understanding of NHS values",
       "Relevant clinical examples"
     ],
     improvements: [
@@ -164,7 +164,7 @@ const InterviewSim = () => {
                   ))}
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold text-orange-600 mb-3 flex items-center gap-1">
                   <AlertCircle className="h-4 w-4" />
@@ -208,7 +208,7 @@ const InterviewSim = () => {
           <RotateCcw className="h-4 w-4" />
           Try Another Interview
         </Button>
-        <Button onClick={() => {}} className="flex items-center gap-2">
+        <Button onClick={() => { }} className="flex items-center gap-2">
           <Download className="h-4 w-4" />
           Download Report
         </Button>
@@ -245,14 +245,14 @@ const InterviewSim = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
           <Link to="/products" className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Products
           </Link>
-          
+
           <div className="flex items-center gap-3 mb-2">
             <MessageSquare className="h-8 w-8 text-blue-600" />
             <h1 className="text-4xl font-bold text-foreground">InterviewSim™</h1>
@@ -263,7 +263,7 @@ const InterviewSim = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        {/* <div className="max-w-6xl mx-auto">
           {validationError && (
             <Card className="bg-red-50 border-red-200 mb-6">
               <CardContent className="pt-6">
@@ -312,9 +312,9 @@ const InterviewSim = () => {
               </CardContent></Card>
             ) : renderResults()
           )}
-        </div>
+        </div> */}
       </div>
-      
+
       <ConditionalFooter />
     </div>
   );
