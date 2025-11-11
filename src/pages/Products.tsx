@@ -82,7 +82,7 @@ const Products = () => {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto mt-8">
             <Button onClick={() => window.dispatchEvent(new CustomEvent('nextdoc:open-ai', { detail: { message: 'Hello NextDoc AI — can you help me plan my NHS journey?', specialty: 'general' } }))} className="w-full sm:w-auto">
-              Try Free (5/day) <ArrowRight className="h-4 w-4 ml-2" />
+              Try Free for 30 Days<ArrowRight className="h-4 w-4 " />
             </Button>
             <BuyNowButton
               item={{
@@ -451,7 +451,7 @@ const Products = () => {
                       Book Mentor <ArrowRight className="h-4 w-4 ml-2" />
                     </Button>
                   </Link>
-                  <BuyNowButton
+                  {/* <BuyNowButton
                     item={{
                       id: 'mentor-session',
                       name: 'Mentor Session',
@@ -476,7 +476,7 @@ const Products = () => {
                     className="w-full"
                   >
                     3-Pack — £{PRICES.mentorConnect.pack3}
-                  </BuyNowButton>
+                  </BuyNowButton> */}
                   <Button
                     variant="ghost"
                     size="sm"

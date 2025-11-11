@@ -16,6 +16,7 @@ import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Upload, FileText, CheckCircle, User, Briefcase, Award, Clock, Shield, FileUp } from 'lucide-react';
 import { useUser } from '@clerk/clerk-react';
+import { Link } from 'react-router-dom';
 
 // Mentor areas and specialty options
 const mentorshipAreaOptions = [
@@ -599,7 +600,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                       <FormDescription className="text-sm">
                         I consent to NextDoc UK processing my personal data in accordance with the
                         <Button variant="link" className="h-auto p-0 text-primary underline">
+                          <Link to="/privacy" target="_blank" rel="noopener noreferrer">
                           Privacy Policy
+                          </Link>
                         </Button>
                         . This includes storing my application data, documents, and contact information.
                       </FormDescription>
@@ -640,7 +643,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                       <FormDescription className="text-sm">
                         I agree to the NextDoc UK
                         <Button variant="link" className="h-auto p-0 text-primary underline mx-1">
+                          <Link to="/terms" target="_blank" rel="noopener noreferrer">
                           Terms & Conditions
+                          </Link>
                         </Button>
                         and
                         <Button variant="link" className="h-auto p-0 text-primary underline mx-1">

@@ -885,7 +885,7 @@ const Index = () => {
               <p>🎙️ Podcast Series Coming Soon — Subscribe to our YouTube channel for updates</p>
             </div>
           </div>
-          <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
+          {/* <div className="aspect-video rounded-lg overflow-hidden shadow-2xl">
             <iframe
               width="100%"
               height="100%"
@@ -896,12 +896,12 @@ const Index = () => {
               allowFullScreen
               className="w-full h-full"
             ></iframe>
-          </div>
+          </div> */}
         </div>
       </section>
 
       {/* Mentor Success Journey Section */}
-      <section className="py-8 md:py-12 bg-gradient-to-br from-muted/20 to-background">
+      {/* <section className="py-8 md:py-12 bg-gradient-to-br from-muted/20 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6 md:mb-8">
             <Badge className="mb-4 bg-primary text-primary-foreground">
@@ -914,7 +914,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-            {/* Dr. Pradeep Sabapathy Journey */}
+           Dr. Pradeep Sabapathy Journey 
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="mx-auto mb-4">
@@ -949,9 +949,9 @@ const Index = () => {
                   Connect on LinkedIn
                 </a>
               </CardContent>
-            </Card>
+            </Card> */}
 
-            {/* Dr. Shilpa Gopal Journey */}
+            {/* Dr. Shilpa Gopal Journey 
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="mx-auto mb-4">
@@ -988,7 +988,7 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            {/* Dr. Roshan Khanderi Journey */}
+            {/* Dr. Roshan Khanderi Journey 
             <Card className="group hover:shadow-lg transition-all duration-300">
               <CardHeader className="text-center pb-2">
                 <div className="mx-auto mb-4">

@@ -18,7 +18,8 @@ const EnglishProficiency = () => {
       subtitle: "AI Writing Analyzer",
       description: "Paste any IELTS/OET task. Get instant band, criteria feedback, and fixes.",
       icon: Pen,
-      route: "/english/writing",
+      // route: "https://next-doc-user-dasborad.vercel.app/dashboard/english/writerpro",
+      route: "/english/writerpro",
       buttonText: "Open WriterPro™"
     },
     {

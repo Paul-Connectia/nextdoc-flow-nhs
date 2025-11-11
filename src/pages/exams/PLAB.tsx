@@ -142,7 +142,7 @@ const PLAB = () => {
                       <step.icon className="h-8 w-8 text-primary transition-transform duration-200 ease-out group-hover:scale-105 hover:scale-105 hover:text-primary/80" />
                     </div>
                   </div>
-                  <CardTitle className="text-lg mb-2">{index + 1}️⃣ {step.title}</CardTitle>
+                  <CardTitle className="text-lg">{index + 1}️⃣ {step.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground text-sm">{step.description}</p>

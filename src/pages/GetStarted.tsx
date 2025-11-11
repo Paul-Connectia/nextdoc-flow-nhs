@@ -95,7 +95,7 @@ const GetStarted = () => {
                 </CardContent>
                 {index < steps.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-6 transform -translate-y-1/2">
-                    <ArrowRight className="h-6 w-6 text-muted-foreground" />
+                    <ArrowRight className="h-5 w-5 text-muted-foreground" />
                   </div>
                 )}
               </Card>
