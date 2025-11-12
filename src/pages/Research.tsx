@@ -8,6 +8,7 @@ import { FileText, Download, ExternalLink, Calendar, Lock, Bell } from "lucide-r
 import { LabsWaitlistForm } from "@/components/LabsWaitlistForm";
 import { SEOHead } from "@/components/SEOHead";
 import { analytics } from "@/lib/analytics";
+import Navigation from "@/components/Navigation";
 
 const Research = () => {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -81,6 +82,7 @@ const Research = () => {
         description="Open-access white papers and practical research on NHS workforce, IMG integration, medical education, and responsible AI."
         canonicalUrl="https://nextdocuk.com/labs"
       />
+      <Navigation/>
 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">

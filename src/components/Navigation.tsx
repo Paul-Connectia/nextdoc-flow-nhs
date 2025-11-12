@@ -6,7 +6,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, Menu, X, Search, Instagram, MessageCircle, Youtube } from "lucide-react";
+import {
+  ChevronDown,
+  Menu,
+  X,
+  Search,
+  Instagram,
+  MessageCircle,
+  Youtube,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { CartIcon } from "@/components/Cart";
 import { EnhancedSearchModal } from "@/components/EnhancedSearchModal";
@@ -18,30 +26,30 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const { user } = useUser()
+  const { user } = useUser();
 
   // Keyboard shortcut for search (Cmd/Ctrl + K)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
         event.preventDefault();
         setIsSearchOpen(true);
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isMenuOpen]);
 
@@ -50,7 +58,11 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0" aria-label="NextDoc UK home">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0"
+            aria-label="NextDoc UK home"
+          >
             <img
               src="/lovable-uploads/ngd-logo-white.jpg"
               alt="NextDoc UK logo"
@@ -58,28 +70,45 @@ const Navigation = () => {
             />
             {/* Desktop branding */}
             <div className="hidden md:flex flex-col leading-tight">
-              <span className="text-lg font-semibold text-foreground">NextDoc UK</span>
+              <span className="text-lg font-semibold text-foreground">
+                NextDoc UK
+              </span>
               <div className="flex flex-col text-xs text-muted-foreground">
-                <span>Built by Doctors, <br /> For Doctors</span>
+                <span>
+                  Built by Doctors, <br /> For Doctors
+                </span>
                 <span className="font-medium text-primary">AI Powered</span>
               </div>
             </div>
             {/* Mobile branding - show company name on mobile but smaller */}
             <div className="md:hidden flex flex-col leading-tight">
-              <span className="text-xs sm:text-sm font-semibold text-foreground whitespace-nowrap">NextDoc UK</span>
-              <span className="text-[10px] sm:text-xs text-primary font-medium whitespace-nowrap">AI Powered</span>
+              <span className="text-xs sm:text-sm font-semibold text-foreground whitespace-nowrap">
+                NextDoc UK
+              </span>
+              <span className="text-[10px] sm:text-xs text-primary font-medium whitespace-nowrap">
+                AI Powered
+              </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Home
             </Link>
-            <Link to="/about" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/about"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               About Us
             </Link>
-            <Link to="/products" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/products"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Products
             </Link>
 
@@ -124,7 +153,7 @@ const Navigation = () => {
                   <Link
                     to="/exams/royal-college"
                     className="w-full cursor-pointer"
-                    onClick={() => analytics.track('rc_dropdown_clicked')}
+                    onClick={() => analytics.track("rc_dropdown_clicked")}
                   >
                     Royal College Exams
                   </Link>
@@ -132,10 +161,16 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link to="/labs" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/labs"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               NextDoc Labs
             </Link>
-            <Link to="/mentors" className="text-foreground hover:text-primary transition-colors">
+            <Link
+              to="/mentors"
+              className="text-foreground hover:text-primary transition-colors"
+            >
               Mentor Insights
             </Link>
           </div>
@@ -180,7 +215,9 @@ const Navigation = () => {
             >
               <Search className="h-4 w-4" />
               <span className="hidden lg:inline">Search</span>
-              <span className="hidden lg:inline text-xs text-muted-foreground">⌘K</span>
+              <span className="hidden lg:inline text-xs text-muted-foreground">
+                ⌘K
+              </span>
             </Button>
             <InstagramAccessBadge compact />
             <SignedOut>
@@ -213,7 +250,11 @@ const Navigation = () => {
               className="min-w-[44px] min-h-[44px] p-2"
               aria-label="Menu"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -239,7 +280,9 @@ const Navigation = () => {
               </SignedOut>
               <SignedIn>
                 <div className="flex justify-between mb-2">
-                  <p className="text-primary font-semibold">Hello, {user.firstName}</p>
+                  <p className="text-primary font-semibold">
+                    Hello, {user?.firstName || "Doctor"}
+                  </p>
                   <UserButton />
                 </div>
               </SignedIn>
@@ -270,7 +313,9 @@ const Navigation = () => {
 
                 {/* Exams Section */}
                 <div className="space-y-1 pt-2">
-                  <p className="text-muted-foreground text-sm font-medium py-1 px-2">Exams</p>
+                  <p className="text-muted-foreground text-sm font-medium py-1 px-2">
+                    Exams
+                  </p>
                   <div className="pl-3 space-y-1">
                     <Link
                       to="/english"
@@ -319,7 +364,7 @@ const Navigation = () => {
                       className="block text-foreground hover:text-primary transition-colors py-1.5 px-2 rounded-md hover:bg-muted/50 min-h-[44px] flex items-center text-sm"
                       onClick={() => {
                         setIsMenuOpen(false);
-                        analytics.track('rc_dropdown_clicked');
+                        analytics.track("rc_dropdown_clicked");
                       }}
                     >
                       Royal College Exams
@@ -344,7 +389,9 @@ const Navigation = () => {
 
                 {/* Mobile Social Media */}
                 <div className="pt-3 mt-3 border-t border-border">
-                  <p className="text-muted-foreground text-sm font-medium mb-3 px-2">Connect</p>
+                  <p className="text-muted-foreground text-sm font-medium mb-3 px-2">
+                    Connect
+                  </p>
                   <div className="flex items-center justify-center space-x-6 pb-4">
                     <a
                       href="https://instagram.com/nextdoc_uk"
