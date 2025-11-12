@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, Star, Users, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { MentorPricingModal } from "@/components/MentorPricingModal";
 
 interface Mentor {
   id: string;
@@ -25,12 +26,18 @@ interface MentorProfileModalProps {
 
 export const MentorProfileModal = ({ mentor, isOpen, onClose }: MentorProfileModalProps) => {
   const navigate = useNavigate();
+  const [showPricingModal, setShowPricingModal] = useState(false);
 
   if (!mentor) return null;
 
   const handleBookSession = () => {
+    setShowPricingModal(true);
+  };
+
+  const handleSelectSession = (duration: 30 | 60, pricing: any) => {
+    setShowPricingModal(false);
     onClose();
-    navigate('/mentors');
+    navigate(`/mentors?duration=${duration}&mentor=${mentor.id}`);
   };
 
   const mockDetails = {
@@ -155,6 +162,18 @@ export const MentorProfileModal = ({ mentor, isOpen, onClose }: MentorProfileMod
           </div>
         </div>
       </DialogContent>
+
+      <MentorPricingModal
+        mentor={{
+          id: mentor.id,
+          name: mentor.name,
+          tier: mentor.badgeText.toLowerCase() as 'associate' | 'senior' | 'principal',
+          image: mentor.image
+        }}
+        isOpen={showPricingModal}
+        onClose={() => setShowPricingModal(false)}
+        onSelectSession={handleSelectSession}
+      />
     </Dialog>
   );
 };

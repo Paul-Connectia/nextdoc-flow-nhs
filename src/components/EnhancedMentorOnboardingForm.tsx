@@ -1,78 +1,212 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { toast } from 'sonner';
-// Replace these with your own validation and rate limiter logic
-import { mentorApplicationSchema, createRateLimiter } from '@/lib/validation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Upload, FileText, CheckCircle, User, Briefcase, Award, Clock, Shield, FileUp } from 'lucide-react';
-import { useUser } from '@clerk/clerk-react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import { mentorApplicationSchema, createRateLimiter } from "@/lib/validation";
+import {
+  MENTOR_TIER_PRICING,
+  getPricingBandForTier,
+  formatCurrency,
+  validateRateForTier,
+  PRICING_VERSION,
+} from "@/config/mentorPricing";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Upload,
+  FileText,
+  CheckCircle,
+  User,
+  Briefcase,
+  Award,
+  Clock,
+  Shield,
+  FileUp,
+  Info,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
-// Mentor areas and specialty options
 const mentorshipAreaOptions = [
-  'CV Review & Optimization',
-  'Interview Preparation',
-  'Clinical Skills Assessment',
-  'Medical Registration (GMC)',
-  'NHS Job Applications',
-  'Specialty Training Guidance',
-  'Academic Medicine',
-  'Research & Publications',
-  'Leadership Development',
-  'Career Progression',
+  "CV Review & Optimization",
+  "Interview Preparation",
+  "Clinical Skills Assessment",
+  "Medical Registration (GMC)",
+  "NHS Job Applications",
+  "Specialty Training Guidance",
+  "Academic Medicine",
+  "Research & Publications",
+  "Leadership Development",
+  "Career Progression",
 ];
 
 const specialtyOptions = [
-  'General Medicine',
-  'General Surgery',
-  'Cardiology',
-  'Neurology',
-  'Psychiatry',
-  'Paediatrics',
-  'Obstetrics & Gynaecology',
-  'Anaesthetics',
-  'Radiology',
-  'Pathology',
-  'Emergency Medicine',
-  'General Practice',
-  'Public Health',
-  'Other',
+  "General Medicine",
+  "General Surgery",
+  "Cardiology",
+  "Neurology",
+  "Psychiatry",
+  "Paediatrics",
+  "Obstetrics & Gynaecology",
+  "Anaesthetics",
+  "Radiology",
+  "Pathology",
+  "Emergency Medicine",
+  "General Practice",
+  "Public Health",
+  "Other",
 ];
 
 const tierOptions = [
-  { value: 'associate', label: 'Associate Mentor', description: 'Recently qualified or early career NHS professional' },
-  { value: 'senior', label: 'Senior Mentor', description: 'Experienced NHS professional with 5+ years' },
-  { value: 'principal', label: 'Principal Mentor', description: 'Senior consultant or leadership role' },
+  {
+    value: "associate",
+    label: "Associate Mentor",
+    description: "Recently qualified or early career NHS professional",
+  },
+  {
+    value: "senior",
+    label: "Senior Mentor",
+    description: "Experienced NHS professional with 5+ years",
+  },
+  {
+    value: "principal",
+    label: "Principal Mentor",
+    description: "Senior consultant or leadership role",
+  },
 ];
 
-// Use secure validation schema
-const formSchema = mentorApplicationSchema.extend({
-  mentoringAreas: z.array(z.string()).min(1, 'Select at least one mentoring area'),
-  calendlyLink: z.string().url('Valid Calendly URL required').optional().or(z.literal('')),
-  gdprConsent: z.boolean().refine(val => val === true, 'GDPR consent is required'),
-  recordingConsent: z.boolean(),
-  termsConsent: z.boolean().refine(val => val === true, 'Terms consent is required'),
-});
+// Enhanced form schema with all required fields
+const formSchema = z
+  .object({
+    fullName: z.string().min(1, "Full name is required"),
+    email: z.string().email("Valid email is required"),
+    phone: z.string().min(1, "Phone number is required"),
+    gmcNumber: z
+      .string()
+      .min(7, "GMC number must be 7 digits")
+      .max(7, "GMC number must be 7 digits"),
+    specialty: z.string().min(1, "Specialty is required"),
+    experienceYears: z.number().int().min(0).max(50),
+    bio: z.string().min(50, "Bio must be at least 50 characters"),
+    jobTitle: z.string().optional(),
+    nhsTrust: z.string().optional(),
+    mentorTier: z
+      .enum(["associate", "senior", "principal"])
+      .default("associate"),
+    hourlyRate: z
+      .number()
+      .multipleOf(
+        0.01,
+        "Please enter a valid amount with up to 2 decimal places"
+      )
+      .optional(),
+    mentoringAreas: z
+      .array(z.string())
+      .min(1, "Select at least one mentoring area"),
+    calendlyLink: z
+      .string()
+      .url("Valid Calendly URL required")
+      .optional()
+      .or(z.literal("")),
+    gdprConsent: z
+      .boolean()
+      .refine((val) => val === true, "GDPR consent is required"),
+    recordingConsent: z.boolean(),
+    termsConsent: z
+      .boolean()
+      .refine((val) => val === true, "Terms consent is required"),
+  })
+  .refine(
+    (data) => {
+      if (data.hourlyRate !== undefined && data.mentorTier) {
+        const validation = validateRateForTier(
+          data.hourlyRate,
+          data.mentorTier
+        );
+        return validation.valid;
+      }
+      return true;
+    },
+    {
+      message: "Hourly rate must be within your tier's range",
+      path: ["hourlyRate"],
+    }
+  );
 
 type FormData = z.infer<typeof formSchema>;
 
 const steps = [
-  { id: 1, title: 'Personal Information', icon: User, fields: ['fullName', 'email', 'phone'] },
-  { id: 2, title: 'Professional Credentials', icon: Briefcase, fields: ['gmcNumber', 'specialty', 'nhsTrust', 'jobTitle', 'experienceYears'] },
-  { id: 3, title: 'Mentor Profile', icon: Award, fields: ['mentorTier', 'bio', 'mentoringAreas', 'hourlyRate'] },
-  { id: 4, title: 'Availability Setup', icon: Clock, fields: ['calendlyLink'] },
-  { id: 5, title: 'Document Upload', icon: FileUp, fields: [] },
-  { id: 6, title: 'Consent & Terms', icon: Shield, fields: ['gdprConsent', 'recordingConsent', 'termsConsent'] },
+  {
+    id: 1,
+    title: "Personal Information",
+    icon: User,
+    fields: ["fullName", "email", "phone"],
+  },
+  {
+    id: 2,
+    title: "Professional Credentials",
+    icon: Briefcase,
+    fields: [
+      "gmcNumber",
+      "specialty",
+      "nhsTrust",
+      "jobTitle",
+      "experienceYears",
+    ],
+  },
+  {
+    id: 3,
+    title: "Mentor Profile",
+    icon: Award,
+    fields: ["mentorTier", "bio", "mentoringAreas", "hourlyRate"],
+  },
+  { id: 4, title: "Availability Setup", icon: Clock, fields: ["calendlyLink"] },
+  { id: 5, title: "Document Upload", icon: FileUp, fields: [] },
+  {
+    id: 6,
+    title: "Consent & Terms",
+    icon: Shield,
+    fields: ["gdprConsent", "recordingConsent", "termsConsent"],
+  },
 ];
 
 interface EnhancedMentorOnboardingFormProps {
@@ -83,160 +217,140 @@ interface EnhancedMentorOnboardingFormProps {
 // Rate limiter for form submissions (max 3 submissions per 15 minutes)
 const submitRateLimiter = createRateLimiter(15 * 60 * 1000, 3);
 
-const apiURL = import.meta.env.VITE_API_BASE_URL
-
-const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> = ({ onClose, isOpen }) => {
+const EnhancedMentorOnboardingForm: React.FC<
+  EnhancedMentorOnboardingFormProps
+> = ({ onClose, isOpen }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [uploadedDocuments, setUploadedDocuments] = useState<{ [key: string]: File }>({});
+  const [uploadedDocuments, setUploadedDocuments] = useState<{
+    [key: string]: File;
+  }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  //check if user authenticated
-  const { user, isLoaded } = useUser()
-
-  // Default values for the form draft
-  const defaultFormDraft: FormData = {
-    // Add all fields here
-    fullName: '',
-    email: '',
-    phone: '',
-    gmcNumber: '',
-    specialty: '',
-    nhsTrust: '',
-    jobTitle: '',
-    experienceYears: 0,
-    mentorTier: 'associate',
-    bio: '',
-    mentoringAreas: [],
-    hourlyRate: 0,
-    calendlyLink: '',
-    gdprConsent: false,
-    recordingConsent: false,
-    termsConsent: false,
-  };
-
-  // Holds all user form data throughout steps
-  const [formDraft, setFormDraft] = useState<FormData>(defaultFormDraft);
-
-  // Initialize React Hook Form
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultFormDraft,
+    defaultValues: {
+      mentoringAreas: [],
+      mentorTier: "associate",
+      gdprConsent: false,
+      recordingConsent: false,
+      termsConsent: false,
+    },
   });
 
-  // When step changes, reset form fields to current draft
-  useEffect(() => {
-    form.reset(formDraft);
-  }, [currentStep, form, formDraft]);
-
-  // Progress bar calculation
   const progress = (currentStep / steps.length) * 100;
 
   const handleDocumentUpload = (documentType: string, file: File) => {
-    setUploadedDocuments(prev => ({ ...prev, [documentType]: file }));
+    setUploadedDocuments((prev) => ({ ...prev, [documentType]: file }));
     toast.success(`${documentType} uploaded successfully`);
   };
 
-  // Save current fields and advance to next step
-  const nextStep = async () => {
+  const nextStep = () => {
     const currentStepFields = steps[currentStep - 1]?.fields || [];
-    const isValid = await form.trigger(currentStepFields as any);
 
-    if (isValid && currentStep < steps.length) {
-      setFormDraft(prev => ({
-        ...prev,
-        ...form.getValues(),
-      }));
-      setCurrentStep(currentStep + 1);
-    }
+    form.trigger(currentStepFields as any).then((isValid) => {
+      if (isValid && currentStep < steps.length) {
+        setCurrentStep(currentStep + 1);
+      }
+    });
   };
 
-  // Save current fields and go backward
   const prevStep = () => {
-    setFormDraft(prev => ({
-      ...prev,
-      ...form.getValues(),
-    }));
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
   };
 
-  // Mock submission handler (replace with your API logic)
-  const onSubmit = async (formData: FormData) => {
-
-    if (isLoaded && !user) {
-      toast.error("Please login to continue...")
-      return
-    }
+  const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    console.log(formData)
+
     try {
-
-      const fd = new FormData();
-
-      // Text fields
-      fd.append("name", formData.fullName);
-      fd.append("fullName", formData.fullName);
-      fd.append("email", formData.email);
-      fd.append("phone", formData.phone);
-      fd.append("gmcNumber", formData.gmcNumber);
-      fd.append("currentNhsTrust", formData.nhsTrust);
-      fd.append("currentRole", formData.jobTitle);
-      fd.append("specialty", formData.specialty);
-      fd.append("gdprConsent", formData.gdprConsent.toString());
-      fd.append("termsConsent", formData.termsConsent.toString());
-      fd.append("recordingConsent", formData.recordingConsent.toString());
-      fd.append(
-        "mentorshipAreas",
-        JSON.stringify(formData.mentoringAreas || [])
-      );
-
-
-      fd.append("nhsExperienceYears", formData.experienceYears.toString());
-      fd.append(
-        "clinicalExperienceYears",
-        formData.experienceYears.toString()
-      );
-
-      fd.append("bio", formData.bio)
-      fd.append("hourlyRate", formData.hourlyRate.toString());
-
-      fd.append("mentorTier", formData.mentorTier)
-
-      // Attach files
-      Object.entries(uploadedDocuments).forEach(([key, file]) => {
-        fd.append(key, file);
-      });
-
-      const userId = 'demo-user-id'; // Replace with actual authenticated user's ID
-
-      if (!submitRateLimiter(userId)) {
-        toast.error('Too many submission attempts. Please wait 15 minutes before trying again.');
-        setIsSubmitting(false);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error("Please sign in to submit your application");
         return;
       }
 
-      // POST apiURL/mentor
-      const response = await fetch(`${apiURL}/mentor`, {
-        method: 'POST',
-        body: fd
-      });
-
-      if (response.ok) {
-        toast.success('Application submitted successfully! We\'ll review it within 2-3 business days.');
-        onClose();
-      } else {
-        const errorMsg = await response.json();
-        toast.error('Failed to submit application: ' + errorMsg.message!);
+      // Apply rate limiting
+      if (!submitRateLimiter(user.id)) {
+        toast.error(
+          "Too many submission attempts. Please wait 15 minutes before trying again."
+        );
+        return;
       }
 
+      // Upload documents to storage if any
+      const documentsMetadata: { [key: string]: string } = {};
+
+      for (const [docType, file] of Object.entries(uploadedDocuments)) {
+        const fileName = `${user.id}/${docType}_${Date.now()}_${file.name}`;
+        const { error: uploadError } = await supabase.storage
+          .from("mentor-documents")
+          .upload(fileName, file);
+
+        if (uploadError) {
+          console.error("Upload error:", uploadError);
+        } else {
+          documentsMetadata[docType] = fileName;
+        }
+      }
+
+      // Generate referral code
+      const { data: referralCode } = await supabase.rpc(
+        "generate_referral_code"
+      );
+
+      // Get pricing band for the selected tier
+      const selectedTier = data.mentorTier as
+        | "associate"
+        | "senior"
+        | "principal";
+      const pricingBand = getPricingBandForTier(selectedTier);
+
+      // Create mentor application
+      const applicationData = {
+        ...data,
+        documents: documentsMetadata,
+        referral_code: referralCode,
+        pricing_band: {
+          min: pricingBand.min,
+          max: pricingBand.max,
+          default: pricingBand.default,
+        },
+        version: PRICING_VERSION,
+      };
+
+      const { error: applicationError } = await supabase
+        .from("mentor_applications")
+        .insert({
+          user_id: user.id,
+          application_data: applicationData,
+          documents: documentsMetadata,
+        });
+
+      if (applicationError) {
+        throw applicationError;
+      }
+
+      // Assign mentor role
+      await supabase.from("user_roles").insert({
+        user_id: user.id,
+        role: "mentor",
+      });
+
+      toast.success(
+        "Application submitted successfully! We'll review it within 2-3 business days."
+      );
+      onClose();
     } catch (error: any) {
-      console.error('Submission error:', error);
-      toast.error('Failed to submit application. Please try again.');
+      console.error("Submission error:", error);
+      toast.error("Failed to submit application. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Step content rendering logic
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -262,7 +376,11 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 <FormItem>
                   <FormLabel>Email Address</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="your.email@nhs.net" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="your.email@nhs.net"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -296,7 +414,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                   <FormControl>
                     <Input placeholder="1234567" {...field} />
                   </FormControl>
-                  <FormDescription>Your General Medical Council registration number</FormDescription>
+                  <FormDescription>
+                    Your General Medical Council registration number
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -307,7 +427,10 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Medical Specialty</FormLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your specialty" />
@@ -325,7 +448,6 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="nhsTrust"
@@ -346,7 +468,10 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 <FormItem>
                   <FormLabel>Current Job Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g., Consultant, Registrar, FY2" {...field} />
+                    <Input
+                      placeholder="e.g., Consultant, Registrar, FY2"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -363,7 +488,7 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                       type="number"
                       placeholder="5"
                       {...field}
-                      onChange={e => field.onChange(parseInt(e.target.value))}
+                      onChange={(e) => field.onChange(parseInt(e.target.value))}
                     />
                   </FormControl>
                   <FormMessage />
@@ -374,15 +499,30 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
         );
 
       case 3:
+        const selectedTier = form.watch("mentorTier") || "associate";
+        const pricingBand = getPricingBandForTier(
+          selectedTier as "associate" | "senior" | "principal"
+        );
+        const currentRate = form.watch("hourlyRate");
+
         return (
           <div className="space-y-4">
+            {/* Mentor Tier Selector */}
             <FormField
               control={form.control}
               name="mentorTier"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Mentor Tier</FormLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(value);
+                      // Auto-prefill default rate when tier changes
+                      const newBand = getPricingBandForTier(value as any);
+                      form.setValue("hourlyRate", newBand.default);
+                    }}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your mentor tier" />
@@ -393,7 +533,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                         <SelectItem key={tier.value} value={tier.value}>
                           <div>
                             <div className="font-medium">{tier.label}</div>
-                            <div className="text-sm text-muted-foreground">{tier.description}</div>
+                            <div className="text-sm text-muted-foreground">
+                              {tier.description}
+                            </div>
                           </div>
                         </SelectItem>
                       ))}
@@ -403,6 +545,77 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 </FormItem>
               )}
             />
+
+            {/* Hourly Rate with Validation */}
+            <FormField
+              control={form.control}
+              name="hourlyRate"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex items-center gap-2">
+                    <FormLabel>Hourly Rate (£)</FormLabel>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Info className="h-4 w-4 text-muted-foreground cursor-help" />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs bg-[#F2F4F7]">
+                          <p className="text-sm">
+                            Recommended range based on your mentor badge. You
+                            may adjust freely within this range.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      min={pricingBand.min}
+                      max={pricingBand.max}
+                      placeholder={pricingBand.default.toString()}
+                      {...field}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        field.onChange(value);
+
+                        // Real-time validation feedback
+                        if (!isNaN(value)) {
+                          const validation = validateRateForTier(
+                            value,
+                            selectedTier as any
+                          );
+                          if (!validation.valid) {
+                            form.setError("hourlyRate", {
+                              type: "manual",
+                              message: validation.error,
+                            });
+                          } else {
+                            form.clearErrors("hourlyRate");
+                          }
+                        }
+                      }}
+                      className="w-full"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-xs">
+                    Recommended range for your badge – Associate £20–£60, Senior
+                    £80–£120, Principal £120–£200. You can set any amount within
+                    this range now and adjust it later in your dashboard.
+                  </FormDescription>
+                  {currentRate && !isNaN(currentRate) && (
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Your current mentoring fee per hour:{" "}
+                      {formatCurrency(currentRate)} (Excluding VAT)
+                    </p>
+                  )}
+                  <FormMessage className="text-[#D92D20]" />
+                </FormItem>
+              )}
+            />
+
+            {/* Bio Field */}
             <FormField
               control={form.control}
               name="bio"
@@ -416,18 +629,25 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>Minimum 50 characters. This will be shown to potential mentees.</FormDescription>
+                  <FormDescription>
+                    Minimum 50 characters. This will be shown to potential
+                    mentees.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Mentoring Areas */}
             <FormField
               control={form.control}
               name="mentoringAreas"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Mentoring Areas of Expertise</FormLabel>
-                  <FormDescription>Select all areas where you can provide guidance</FormDescription>
+                  <FormDescription>
+                    Select all areas where you can provide guidance
+                  </FormDescription>
                   <div className="grid grid-cols-2 gap-3">
                     {mentorshipAreaOptions.map((area) => (
                       <div key={area} className="flex items-center space-x-2">
@@ -441,7 +661,10 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                             field.onChange(updatedAreas);
                           }}
                         />
-                        <label htmlFor={area} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        <label
+                          htmlFor={area}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
                           {area}
                         </label>
                       </div>
@@ -451,25 +674,12 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="hourlyRate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Hourly Rate (£)</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="50"
-                      {...field}
-                      onChange={e => field.onChange(parseFloat(e.target.value))}
-                    />
-                  </FormControl>
-                  <FormDescription>Your mentoring fee per hour (£20-500)</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
+            {/* Optional Enhancement: Micro-text */}
+            <p className="text-xs text-muted-foreground">
+              NextDoc UK adds VAT at checkout and auto-handles platform fees —
+              you receive the full take-home amount.
+            </p>
           </div>
         );
 
@@ -483,10 +693,14 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 <FormItem>
                   <FormLabel>Calendly Booking Link (Optional)</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://calendly.com/your-profile" {...field} />
+                    <Input
+                      placeholder="https://calendly.com/your-profile"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
-                    If you have a Calendly account, paste your booking link here. You can set this up later.
+                    If you have a Calendly account, paste your booking link
+                    here. You can set this up later.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -496,8 +710,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
               <CardHeader>
                 <CardTitle className="text-lg">Availability Setup</CardTitle>
                 <CardDescription>
-                  We recommend setting up a Calendly account for seamless booking management.
-                  You can configure your availability and integrate it with your calendar.
+                  We recommend setting up a Calendly account for seamless
+                  booking management. You can configure your availability and
+                  integrate it with your calendar.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -519,7 +734,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
         return (
           <div className="space-y-4">
             <div className="text-center mb-6">
-              <h3 className="text-lg font-semibold mb-2">Upload Required Documents</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                Upload Required Documents
+              </h3>
               <p className="text-sm text-muted-foreground">
                 Please upload the following documents to verify your credentials
               </p>
@@ -527,12 +744,27 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
 
             <div className="grid gap-4">
               {[
-                { key: 'cv', label: 'Current CV/Resume', required: true },
-                { key: 'gmc_certificate', label: 'GMC Registration Certificate', required: true },
-                { key: 'medical_degree', label: 'Medical Degree Certificate', required: true },
-                { key: 'photo_id', label: 'Photo ID (Passport/Driving License)', required: true },
-                { key: 'additional', label: 'Additional Certificates (Optional)', required: false },
-
+                { key: "cv", label: "Current CV/Resume", required: true },
+                {
+                  key: "gmc_certificate",
+                  label: "GMC Registration Certificate",
+                  required: true,
+                },
+                {
+                  key: "medical_degree",
+                  label: "Medical Degree Certificate",
+                  required: true,
+                },
+                {
+                  key: "photo_id",
+                  label: "Photo ID (Passport/Driving License)",
+                  required: true,
+                },
+                {
+                  key: "additional",
+                  label: "Additional Certificates (Optional)",
+                  required: false,
+                },
               ].map((doc) => (
                 <Card key={doc.key} className="p-4">
                   <div className="flex items-center justify-between">
@@ -540,7 +772,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                       <FileText className="h-5 w-5 text-muted-foreground" />
                       <div>
                         <p className="font-medium">{doc.label}</p>
-                        {doc.required && <p className="text-xs text-red-500">Required</p>}
+                        {doc.required && (
+                          <p className="text-xs text-red-500">Required</p>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -554,11 +788,12 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                           variant="outline"
                           size="sm"
                           onClick={() => {
-                            const input = document.createElement('input');
-                            input.type = 'file';
-                            input.accept = '.pdf,.doc,.docx,.jpg,.jpeg,.png';
+                            const input = document.createElement("input");
+                            input.type = "file";
+                            input.accept = ".pdf,.doc,.docx,.jpg,.jpeg,.png";
                             input.onchange = (e) => {
-                              const file = (e.target as HTMLInputElement).files?.[0];
+                              const file = (e.target as HTMLInputElement)
+                                .files?.[0];
                               if (file) handleDocumentUpload(doc.key, file);
                             };
                             input.click();
@@ -582,7 +817,8 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
             <div className="text-center mb-6">
               <h3 className="text-lg font-semibold mb-2">Consent & Terms</h3>
               <p className="text-sm text-muted-foreground">
-                Please review and accept the following terms to complete your application
+                Please review and accept the following terms to complete your
+                application
               </p>
             </div>
 
@@ -593,18 +829,24 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>GDPR Consent (Required)</FormLabel>
                       <FormDescription className="text-sm">
-                        I consent to NextDoc UK processing my personal data in accordance with the
-                        <Button variant="link" className="h-auto p-0 text-primary underline">
-                          <Link to="/privacy" target="_blank" rel="noopener noreferrer">
-                          Privacy Policy
-                          </Link>
+                        I consent to NextDoc UK processing my personal data in
+                        accordance with the
+                        <Button
+                          variant="link"
+                          className="h-auto p-0 text-primary underline"
+                        >
+                          <Link to="/privacy-policy">Privacy Policy</Link>
                         </Button>
-                        . This includes storing my application data, documents, and contact information.
+                        . This includes storing my application data, documents,
+                        and contact information.
                       </FormDescription>
                     </div>
                   </FormItem>
@@ -617,13 +859,20 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <FormLabel>Session Recording Consent (Optional)</FormLabel>
+                      <FormLabel>
+                        Session Recording Consent (Optional)
+                      </FormLabel>
                       <FormDescription className="text-sm">
-                        I consent to mentoring sessions being recorded for quality assurance and training purposes.
-                        Recordings will be stored securely and only accessed by authorized personnel.
+                        I consent to mentoring sessions being recorded for
+                        quality assurance and training purposes. Recordings will
+                        be stored securely and only accessed by authorized
+                        personnel.
                       </FormDescription>
                     </div>
                   </FormItem>
@@ -636,20 +885,31 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                     <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>Terms & Conditions (Required)</FormLabel>
                       <FormDescription className="text-sm">
                         I agree to the NextDoc UK
-                        <Button variant="link" className="h-auto p-0 text-primary underline mx-1">
-                          <Link to="/terms" target="_blank" rel="noopener noreferrer">
-                          Terms & Conditions
+                        <Button
+                          variant="link"
+                          className="h-auto p-0 text-primary underline mx-1"
+                        >
+                          <Link to="/terms-and-conditions">
+                            Terms & Conditions
                           </Link>
                         </Button>
                         and
-                        <Button variant="link" className="h-auto p-0 text-primary underline mx-1">
-                          Mentor Code of Conduct
+                        <Button
+                          variant="link"
+                          className="h-auto p-0 text-primary underline mx-1"
+                        >
+                          <Link to="/mentor-code-of-conduct">
+                            Mentor Code of Conduct
+                          </Link>
                         </Button>
                         . I understand my responsibilities as a mentor.
                       </FormDescription>
@@ -679,7 +939,9 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
           {/* Progress Bar */}
           <div className="space-y-2">
             <div className="flex justify-between text-sm text-muted-foreground">
-              <span>Step {currentStep} of {steps.length}</span>
+              <span>
+                Step {currentStep} of {steps.length}
+              </span>
               <span>{Math.round(progress)}% Complete</span>
             </div>
             <Progress value={progress} className="h-2" />
@@ -687,23 +949,41 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
 
           {/* Step Indicator */}
           <div className="flex items-center justify-between">
-            {steps.map((step) => {
+            {steps.map((step, index) => {
               const isActive = currentStep === step.id;
               const isCompleted = currentStep > step.id;
               const Icon = step.icon;
 
               return (
-                <div key={step.id} className="flex flex-col items-center space-y-2">
-                  <div className={`
+                <div
+                  key={step.id}
+                  className="flex flex-col items-center space-y-2"
+                >
+                  <div
+                    className={`
                     w-10 h-10 rounded-full flex items-center justify-center
-                    ${isCompleted ? 'bg-green-500 text-white' :
-                      isActive ? 'bg-primary text-primary-foreground' :
-                        'bg-muted text-muted-foreground'}
-                  `}>
-                    {isCompleted ? <CheckCircle className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
+                    ${
+                      isCompleted
+                        ? "bg-green-500 text-white"
+                        : isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }
+                  `}
+                  >
+                    {isCompleted ? (
+                      <CheckCircle className="h-5 w-5" />
+                    ) : (
+                      <Icon className="h-5 w-5" />
+                    )}
                   </div>
-                  <span className={`text-xs text-center max-w-[80px] ${isActive ? 'text-primary font-medium' : 'text-muted-foreground'
-                    }`}>
+                  <span
+                    className={`text-xs text-center max-w-[80px] ${
+                      isActive
+                        ? "text-primary font-medium"
+                        : "text-muted-foreground"
+                    }`}
+                  >
                     {step.title}
                   </span>
                 </div>
@@ -717,13 +997,13 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    {React.createElement(currentStepData.icon, { className: "h-5 w-5" })}
+                    {React.createElement(currentStepData.icon, {
+                      className: "h-5 w-5",
+                    })}
                     {currentStepData.title}
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  {renderStepContent()}
-                </CardContent>
+                <CardContent>{renderStepContent()}</CardContent>
               </Card>
 
               {/* Navigation Buttons */}
@@ -736,9 +1016,10 @@ const EnhancedMentorOnboardingForm: React.FC<EnhancedMentorOnboardingFormProps> 
                 >
                   Previous
                 </Button>
+
                 {currentStep === steps.length ? (
                   <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                    {isSubmitting ? "Submitting..." : "Submit Application"}
                   </Button>
                 ) : (
                   <Button type="button" onClick={nextStep}>

@@ -49,6 +49,7 @@ import Pricing from "./pages/Pricing";
 import Consultation from "./pages/Consultation";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import MentorCodeOfConduct from "./pages/MentorCode";
 import Refund from "./pages/Refund";
 import Cookies from "./pages/Cookies";
 import AdminDashboard from "@/components/AdminDashboard";
@@ -118,6 +119,7 @@ const App = () => (
                     <Route path="/consultation" element={<Consultation />} />
                     <Route path="/terms" element={<Terms />} />
                     <Route path="/privacy" element={<Privacy />} />
+                    <Route path="/mentor-code-of-conduct" element={<MentorCodeOfConduct />} />
                     <Route path="/refund" element={<Refund />} />
                     <Route path="/cookies" element={<Cookies />} />
                     <Route path="/checkout/success" element={<CheckoutSuccess />} />
