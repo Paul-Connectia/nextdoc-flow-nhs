@@ -13,6 +13,7 @@ import { analytics } from "@/lib/analytics";
 import { useState, useMemo, useCallback } from "react";
 import { Mentor, MentorFilters } from "@/types/mentor";
 import { useNavigate } from "react-router-dom";
+import Navigation from "@/components/Navigation";
 
 const Mentors = () => {
   const navigate = useNavigate();
@@ -249,6 +250,7 @@ const Mentors = () => {
 
   return (
     <div className="min-h-screen bg-background">
+    <Navigation/>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
